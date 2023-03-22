@@ -1,4 +1,4 @@
-# Curso de Java (Spring, Maven, JavaScript, NodeJS, ReactJS) - Rama Hotfix
+# Curso de Java (Spring, Maven, JavaScript, NodeJS, ReactJS)
 
 ## Instalaciones
 
