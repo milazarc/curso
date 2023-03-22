@@ -21,7 +21,6 @@ public class DemoApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-		// comentario
 	}
 
 	@Autowired
@@ -46,7 +45,7 @@ public class DemoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicación arrancada");
 		
-//		StringRepository dao = new StringRepositoryImpl();
+		StringRepository dao = new StringRepositoryImpl();
 //		dao = new StringRepositoryMockImpl();
 //		var srv = new StringServiceImpl(dao);
 //		System.out.println(srv.get(1));
@@ -59,6 +58,7 @@ public class DemoApplication implements CommandLineRunner {
 //		System.out.println(rango.getMin() + rango.getMax());
 		System.out.println(tonteria != null ? tonteria.dimeAlgo() : "Tonteria nula");
 		System.out.println(config);
+		srv.add("algo");
 	}
 
 }
