@@ -1,4 +1,4 @@
-# Curso de Java (Spring, Maven, JavaScript, NodeJS, ReactJS) - Rama
+# Curso de Java (Spring, Maven, JavaScript, NodeJS, ReactJS)
 
 ## Instalaciones
 
