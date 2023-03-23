@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.example.core.test.Smoke;
+import com.example.core.test.SpaceCamelCase;
 
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 class CalculadoraTest {
@@ -28,10 +29,10 @@ class CalculadoraTest {
 
 	@Nested
 	@DisplayName("Pruebas del metodo Suma")
-	@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+	@DisplayNameGeneration(SpaceCamelCase.class)
 	class Suma {
 		@Nested
-		class OK {
+		class Ok {
 			@Test
 			void testSumaPositivoPositivo() {
 				
@@ -85,7 +86,7 @@ class CalculadoraTest {
 
 		}
 		@Nested
-		class KO {
+		class Ko {
 			
 		}
 	}
@@ -94,7 +95,7 @@ class CalculadoraTest {
 	@DisplayName("Pruebas del metodo Divide")
 	class Divide {
 		@Nested
-		class OK {
+		class Ok {
 
 			void testDividirPorPositivo() {
 				assertThrows(ArithmeticException.class, () -> calc.divide(1, 1));
@@ -106,7 +107,7 @@ class CalculadoraTest {
 		}
 		
 		@Nested
-		class KO {
+		class Ko {
 			@Test
 			void testDividirPorCero() {
 				assertThrows(ArithmeticException.class, () -> calc.divide(1, 0.0));
