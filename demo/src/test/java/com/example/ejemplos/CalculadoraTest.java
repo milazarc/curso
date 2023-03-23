@@ -70,7 +70,6 @@ class CalculadoraTest {
 			@CsvSource(value = {"1, 1, 2", "0.1, 0.2, 0.3", "-1,-3,-4"})
 			void testSumaMultipleParametrizada(double op1, double op2, double rslt) {
 			
-				
 				assertEquals(rslt, calc.suma(op1, op2));
 			}
 			
