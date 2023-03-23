@@ -17,9 +17,13 @@ class PersonaTest {
 		
 		assertNotNull(p);
 		assertTrue(p instanceof Persona, "No es una instancia de persona");
-		assertEquals(1, p.getId());
-		assertEquals("Pepito", p.getNombre());
-		assertEquals("Grillo", p.getApellidos());
+		
+		assertAll("Validar propiedades", 
+				() -> assertEquals(1, p.getId(), "id"),
+				() -> assertEquals("Pepito", p.getNombre(), "getNombre"),
+				() -> assertEquals("Grillo", p.getApellidos(), "getApellidos"));
+		
+		
 	}
 
 }
