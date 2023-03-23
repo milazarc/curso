@@ -33,7 +33,7 @@ class PersonaTest {
 	@DisplayName("Test multiples creaciones")
 		void repeatedTestCreate(RepetitionInfo repetitionInfo) {
 		var p = Persona.builder().id(repetitionInfo.getCurrentRepetition())
-				.nombre("Pepito" + repetitionInfo.getCurrentRepetition())
+				.nombre("Pepito" + (repetitionInfo.getCurrentRepetition() % 3 == 0 ? "": repetitionInfo.getCurrentRepetition() ))
 				.apellidos("Grillo").build();
 		
 		assertNotNull(p);
