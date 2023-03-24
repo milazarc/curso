@@ -1,6 +1,8 @@
 package com.example.ejemplos;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -80,6 +82,15 @@ class CalculadoraTest {
 			
 				assertEquals(rslt, calc.suma(op1, op2));
 			}
+			
+			@Test
+			void testSumaMock() {
+				Calculadora calc = mock(Calculadora.class);
+				
+				when(calc.suma(2, 2)).thenReturn(3.0);
+				assertEquals(3, calc.suma(2, 2));
+				
+				}
 			
 
 
