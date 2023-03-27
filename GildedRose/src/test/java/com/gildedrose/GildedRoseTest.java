@@ -11,83 +11,74 @@ import org.junit.jupiter.api.Nested;
 
 class GildedRoseTest {
 
-    @Test
-    void foo() {
-        Item[] items = new Item[] { new Item("foo", 0, 0) };
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertEquals("foo", app.items[0].name);
-    }
-    
-    @Test
-    void Sulfuras() {
-        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 0, 80) };
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertEquals(80, app.items[0].quality);
-        assertEquals(0, app.items[0].sellIn);
-    }
-    
-    @Nested
-    class Brie{
-    	String name = "Aged Brie";
-    	
-    	@Nested
-    	@DisplayName("Aged Brie OK")
-    	class OK{
-    		
-    		@ParameterizedTest(name = "sellIn={0} quality={1} update-> sellIn={2} quality={3}")
-    		@CsvSource(value = {
-    				"0, 80, 0, 80"
-    				})
-    		void sulfurasTest(int sellIN, int quality, int sellInRes, int quelityRes) {
-    	        Item[] items = new Item[] { new Item(name, sellIN, quality) };
-    	        GildedRose app = new GildedRose(items);
-    	        app.updateQuality();
-    	        assertEquals(quelityRes, app.items[0].quality);
-    	        assertEquals(sellInRes, app.items[0].sellIn);
-    		}
-    		
-    	}
-    	
-    	@Nested
-    	@DisplayName("Aged Brie KO")
-    	class KO{
-    		
-    	}
-    	
-    }
-    
-    @Nested
-    class Sulfuras{
-    	String name = "Sulfuras, Hand of Ragnaros";
-    	
-    	@Nested
-    	@DisplayName("Sulfuras OK")
-    	class OK{
-    		
-    		@ParameterizedTest(name = "sellIn={0} quality={1} update-> sellIn={2} quality={3}")
-    		@CsvSource(value = {
-    				"0, 80, -1, 80",
-    				"-2, 79, -1, 79"
-    				})
-    		void sulfurasTest(int sellIN, int quality, int sellInRes, int quelityRes) {
-    	        Item[] items = new Item[] { new Item(name, sellIN, quality) };
-    	        GildedRose app = new GildedRose(items);
-    	        app.updateQuality();
-    	        assertEquals(quelityRes, app.items[0].quality);
-    	        assertEquals(sellInRes, app.items[0].sellIn);
-    		}
-    		
-    	}
-    	
-    	@Nested
-    	@DisplayName("Sulfuras KO")
-    	class KO{
-    		
-    	}
-    	
-    }
-    
+	@Test
+	void foo() {
+		Item[] items = new Item[] { new Item("foo", 0, 0) };
+		GildedRose app = new GildedRose(items);
+		app.updateQuality();
+		assertEquals("foo", app.items[0].name);
+	}
+
+	@ParameterizedTest(name = "sellIn={0} quality={1} update-> sellIn={2} quality={3}")
+	@CsvSource(value = { 
+			"-1, 40, -2, 42",
+			"10, 49, 11, 5",
+			"-1, 40, -2, 42" })
+	void agedBrieTest(int sellIN, int quality, int sellInRes, int quelityRes) {
+		String name = "Sulfuras, Hand of Ragnaros";
+		Item[] items = new Item[] { new Item("", sellIN, quality) };
+		GildedRose app = new GildedRose(items);
+		app.updateQuality();
+		assertEquals(quelityRes, app.items[0].quality);
+		assertEquals(sellInRes, app.items[0].sellIn);
+	}
+
+	
+
+	@ParameterizedTest(name = "sellIn={0} quality={1} update-> sellIn={2} quality={3}")
+	@CsvSource(value = { 
+			"0, 80, -1, 80",
+			"-2, 79, -1, 79" })
+	void sulfurasTest(int sellIN, int quality, int sellInRes, int quelityRes) {
+		String name = "Aged Brie";
+		Item[] items = new Item[] { new Item(name, sellIN, quality) };
+		GildedRose app = new GildedRose(items);
+		app.updateQuality();
+		assertEquals(quelityRes, app.items[0].quality);
+		assertEquals(sellInRes, app.items[0].sellIn);
+	}
+
+	
+
+	@ParameterizedTest(name = "item= {4} sellIn={0} quality={1} update-> sellIn={2} quality={3}")
+	@CsvSource(value = { 
+			"0, 80, 0, 80, ''",
+			
+			})
+	void otherTest(int sellIN, int quality, int sellInRes, int quelityRes) {
+		String name = "other";
+		Item[] items = new Item[] { new Item(name, sellIN, quality) };
+		GildedRose app = new GildedRose(items);
+		app.updateQuality();
+		assertEquals(quelityRes, app.items[0].quality);
+		assertEquals(sellInRes, app.items[0].sellIn);
+	}
+
+	
+
+	@ParameterizedTest(name = "item= {4} sellIn={0} quality={1} update-> sellIn={2} quality={3}")
+	@CsvSource(value = { 
+			"0, 80, 0, 80, ''"
+			})
+	void BackstageTest(int sellIN, int quality, int sellInRes, int quelityRes) {
+		String name = "Backstage passes to a TAFKAL80ETC concert";
+		Item[] items = new Item[] { new Item(name, sellIN, quality) };
+		GildedRose app = new GildedRose(items);
+		app.updateQuality();
+		assertEquals(quelityRes, app.items[0].quality);
+		assertEquals(sellInRes, app.items[0].sellIn);
+	}
 
 }
+
+
