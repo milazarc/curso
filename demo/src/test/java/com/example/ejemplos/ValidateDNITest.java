@@ -15,14 +15,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import com.example.core.test.SpaceCamelCase;
+import com.example.domain.core.validations.CadenasValidator;
 
-public class ValidateTest {
-
-	Validate validate;
+public class ValidateDNITest {
 	
 	@BeforeEach
 	void setUp() {
-		validate = new Validate();
 	}
 	
 	@Nested
@@ -44,7 +42,7 @@ public class ValidateTest {
 					})
 			public void validateDniMayuscula(String value) {
 				
-				assertTrue(validate.validaDNI(value));
+				assertTrue(CadenasValidator.isNIF(value));
 			}
 			
 		}
@@ -65,7 +63,7 @@ public class ValidateTest {
 					})
 			public void validateDniMayuscula(String value) {
 				
-					assertTrue(!validate.validaDNI(value));
+					assertTrue(CadenasValidator.isNotNIF(value));
 			}
 			
 		}
