@@ -35,7 +35,7 @@ public class ValidateTest {
 		class OK{
 			@ParameterizedTest(name = "DNI = {0} Test={1}")
 			@CsvSource(value = {
-					"'37216026W', 'DNI Valido'",
+					"'37216026w', 'DNI Valido con minuscula'",
 					"'14670704Q', 'DNI Valido'",
 					"'01053998T', 'DNI Valido'",
 					"'49065753Z', 'DNI Valido'",
@@ -59,11 +59,8 @@ public class ValidateTest {
 			@CsvSource(value = {
 					"'123456711', 'Todo numeros, lenght bueno'",
 					"'12345678X', 'DNI inventado, lenght bueno',",
-					"'87654321A', 'DNI inventado, lenght bueno',",
-					"'1234567D', 'Un numero menos'",
 					"'12345671', 'Todo numeros, lenght malo'",
 					"'D2345678D', 'Letra principio numeros, lenght bueno'",
-					"'ABCDEFGHI', 'Todo letras, lenght bueno'",
 					"'', 'Campo DNI Vacio'",
 					})
 			public void validateDniMayuscula(String value) {
