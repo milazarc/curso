@@ -10,6 +10,8 @@ import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
 import com.example.ioc.EjemplosIoC;
 
+import jakarta.transaction.Transactional;
+
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -22,6 +24,7 @@ public class DemoApplication implements CommandLineRunner {
 	ActorRepository daoActorRepository;
 
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicación arrancada");
 //		(new EjemplosIoC()).run();
@@ -37,13 +40,28 @@ public class DemoApplication implements CommandLineRunner {
 //		}
 //		daoActorRepository.findAll().forEach(System.out::println);
 		
-		daoActorRepository.findTop5ByFirstNameStartingWithOrderByLastNameDesc("P").forEach(System.out::println);
-		daoActorRepository.findTop5ByFirstNameStartingWith("P", Sort.by("LastName").descending()).forEach(System.out::println);
-		daoActorRepository.findTop5ByFirstNameStartingWith("P", Sort.by("LastName")).forEach(System.out::println);
+//		daoActorRepository.findTop5ByFirstNameStartingWithOrderByLastNameDesc("P").forEach(System.out::println);
+//		daoActorRepository.findTop5ByFirstNameStartingWith("P", Sort.by("LastName").descending()).forEach(System.out::println);
+//		daoActorRepository.findTop5ByFirstNameStartingWith("P", Sort.by("LastName")).forEach(System.out::println);
+//		
+//		
+//		daoActorRepository.findConJPQL().forEach(System.out::println);
+//		daoActorRepository.findConJPQL(5).forEach(System.out::println);
+//		daoActorRepository.findConSQL(5).forEach(System.out::println);
 		
+//		daoActorRepository.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"), 5))
+//			.forEach(System.out::println);
+//		
+//		daoActorRepository.findAll((root, query, builder) -> builder.greaterThan(root.get("actorId"), 200))
+//			.forEach(System.out::println);
 		
-		daoActorRepository.findConJPQL().forEach(System.out::println);
-		daoActorRepository.findConJPQL(5).forEach(System.out::println);
-		daoActorRepository.findConSQL(5).forEach(System.out::println);
+		var item = daoActorRepository.findById(1);
+		if(item.isPresent()) {
+			var actor = item.get();
+			actor.getFilmActors()
+			.forEach(o -> System.out.println(o.getFilm().getTitle()));
+		}else {
+			System.out.println("Actor no encontrado");
 		}
+	}
 }
