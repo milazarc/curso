@@ -55,6 +55,9 @@ class GildedRoseTest {
 	@ParameterizedTest(name = "SellIn: {0} -> {2}, Quality: {1} -> {3}")
 	@CsvSource({
 		"11, 0, 10, 1",
+		"4, 10, 3, 13",
+		"1, 10, 0, 13",
+		"10, 10, 9, 12",
 		"7, 1, 6, 3",
 		"7, 49, 6, 50",
 		"5, 3, 4, 6",
