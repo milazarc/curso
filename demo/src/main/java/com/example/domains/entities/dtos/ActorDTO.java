@@ -1,8 +1,10 @@
 package com.example.domains.entities.dtos;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Value;
 
-@Value
+@Data @AllArgsConstructor
 public class ActorDTO {
 	
 	private int actorId;
