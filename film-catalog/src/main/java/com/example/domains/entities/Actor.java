@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
-import com.example.domains.core.validations.NIF;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -143,11 +142,4 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 				+ lastUpdate + "]";
 	}
 
-	public void jubilate() {
-		
-	}
-	
-	public void recibePremio(String premio) {
-		
-	}
 }
