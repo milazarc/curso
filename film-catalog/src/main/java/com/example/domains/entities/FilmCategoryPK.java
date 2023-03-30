@@ -11,7 +11,7 @@ import jakarta.persistence.*;
  * 
  */
 @Embeddable
-public class FilmCategoryPK extends EntityBase<FilmCategoryPK> implements Serializable {
+public class FilmCategoryPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -19,20 +19,26 @@ public class FilmCategoryPK extends EntityBase<FilmCategoryPK> implements Serial
 	private int filmId;
 
 	@Column(name="category_id", insertable=false, updatable=false, unique=true, nullable=false)
-	private byte categoryId;
+	private int categoryId;
 
 	public FilmCategoryPK() {
 	}
+	
+	public FilmCategoryPK(int filmId, int categoryId) {
+		setFilmId(filmId);
+		setCategoryId(categoryId);
+	}
+	
 	public int getFilmId() {
 		return this.filmId;
 	}
 	public void setFilmId(int filmId) {
 		this.filmId = filmId;
 	}
-	public byte getCategoryId() {
+	public int getCategoryId() {
 		return this.categoryId;
 	}
-	public void setCategoryId(byte categoryId) {
+	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
 

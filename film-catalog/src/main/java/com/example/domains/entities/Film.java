@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
 
@@ -37,15 +38,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 
 	@Column(name="release_year")
 	private Short releaseYear;
-
-	@Column(name="rental_duration", nullable=false)
-	private byte rentalDuration;
-
-	@Column(name="rental_rate", nullable=false, precision=10, scale=2)
-	private BigDecimal rentalRate;
-
-	@Column(name="replacement_cost", nullable=false, precision=10, scale=2)
-	private BigDecimal replacementCost;
 
 	@Column(nullable=false, length=128)
 	private String title;
@@ -119,30 +111,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.releaseYear = releaseYear;
 	}
 
-	public byte getRentalDuration() {
-		return this.rentalDuration;
-	}
-
-	public void setRentalDuration(byte rentalDuration) {
-		this.rentalDuration = rentalDuration;
-	}
-
-	public BigDecimal getRentalRate() {
-		return this.rentalRate;
-	}
-
-	public void setRentalRate(BigDecimal rentalRate) {
-		this.rentalRate = rentalRate;
-	}
-
-	public BigDecimal getReplacementCost() {
-		return this.replacementCost;
-	}
-
-	public void setReplacementCost(BigDecimal replacementCost) {
-		this.replacementCost = replacementCost;
-	}
-
 	public String getTitle() {
 		return this.title;
 	}
@@ -175,18 +143,15 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.filmActors = filmActors;
 	}
 
-	public FilmActor addFilmActor(FilmActor filmActor) {
+	public void addFilmActor(Actor actor) {
+		FilmActor filmActor = new FilmActor(actor, this);
 		getFilmActors().add(filmActor);
-		filmActor.setFilm(this);
-
-		return filmActor;
+		actor.addFilmActor(this);
 	}
 
-	public FilmActor removeFilmActor(FilmActor filmActor) {
+	public void removeFilmActor(Actor actor) {
+		FilmActor filmActor = new FilmActor(actor, this);
 		getFilmActors().remove(filmActor);
-		filmActor.setFilm(null);
-
-		return filmActor;
 	}
 
 	public List<FilmCategory> getFilmCategories() {
@@ -197,19 +162,40 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.filmCategories = filmCategories;
 	}
 
-	public FilmCategory addFilmCategory(FilmCategory filmCategory) {
+	public void addFilmCategory(Category category) {
+		FilmCategory filmCategory = new FilmCategory(this, category);
 		getFilmCategories().add(filmCategory);
-		filmCategory.setFilm(this);
-
-		return filmCategory;
+		category.addFilmCategory(filmCategory);
 	}
 
-	public FilmCategory removeFilmCategory(FilmCategory filmCategory) {
+	public void removeFilmCategory(Category category) {
+		FilmCategory filmCategory = new FilmCategory(this, category);
 		getFilmCategories().remove(filmCategory);
-		filmCategory.setFilm(null);
-
-		return filmCategory;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(filmId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Film other = (Film) obj;
+		return filmId == other.filmId;
+	}
+
+	@Override
+	public String toString() {
+		return "Film [filmId=" + filmId + ", description=" + description + ", lastUpdate=" + lastUpdate + ", length="
+				+ length + ", rating=" + rating + ", releaseYear=" + releaseYear + ", title=" + title + ", language="
+				+ language + ", languageVO=" + languageVO + ", filmActors=" + filmActors + ", filmCategories="
+				+ filmCategories + "]";
+	}
 
 }

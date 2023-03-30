@@ -3,8 +3,7 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
-
-import com.example.domains.core.entities.EntityBase;
+import java.util.Objects;
 
 
 /**
@@ -14,13 +13,13 @@ import com.example.domains.core.entities.EntityBase;
 @Entity
 @Table(name="film_actor")
 @NamedQuery(name="FilmActor.findAll", query="SELECT f FROM FilmActor f")
-public class FilmActor extends EntityBase<FilmActor> implements Serializable {
+public class FilmActor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private FilmActorPK id;
 
-	@Column(name="last_update", nullable=false)
+	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Actor
@@ -34,6 +33,12 @@ public class FilmActor extends EntityBase<FilmActor> implements Serializable {
 	private Film film;
 
 	public FilmActor() {
+	}
+	
+	public FilmActor(Actor actor, Film film) {
+		id = new FilmActorPK(actor.getActorId(), film.getFilmId());
+		setActor(actor);
+		setFilm(film);
 	}
 
 	public FilmActorPK getId() {
@@ -67,5 +72,29 @@ public class FilmActor extends EntityBase<FilmActor> implements Serializable {
 	public void setFilm(Film film) {
 		this.film = film;
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FilmActor other = (FilmActor) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "FilmActor [id=" + id + ", lastUpdate=" + lastUpdate + ", actor=" + actor + ", film=" + film + "]";
+	}
+	
+	
 
 }

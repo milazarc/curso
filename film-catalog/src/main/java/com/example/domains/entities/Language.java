@@ -40,6 +40,17 @@ public class Language extends EntityBase<Language> implements Serializable {
 	public Language() {
 	}
 
+	public Language(int languageId) {
+		super();
+		this.languageId = languageId;
+	}
+
+	public Language(int languageId, String name) {
+		super();
+		this.languageId = languageId;
+		this.name = name;
+	}
+
 	public int getLanguageId() {
 		return this.languageId;
 	}
@@ -72,11 +83,9 @@ public class Language extends EntityBase<Language> implements Serializable {
 		this.films = films;
 	}
 
-	public Film addFilm(Film film) {
+	public void addFilm(Film film) {
 		getFilms().add(film);
 		film.setLanguage(this);
-
-		return film;
 	}
 
 	public Film removeFilm(Film film) {

@@ -93,10 +93,6 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
 	public List<FilmActor> getFilmActors() {
 		return this.filmActors;
 	}
@@ -105,18 +101,15 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		this.filmActors = filmActors;
 	}
 
-	public FilmActor addFilmActor(FilmActor filmActor) {
+	public void addFilmActor(Film film) {
+		FilmActor filmActor = new FilmActor(this, film);
 		getFilmActors().add(filmActor);
-		filmActor.setActor(this);
-
-		return filmActor;
+		film.addFilmActor(this);
 	}
 
-	public FilmActor removeFilmActor(FilmActor filmActor) {
+	public void removeFilmActor(Film film) {
+		FilmActor filmActor = new FilmActor(this, film);
 		getFilmActors().remove(filmActor);
-		filmActor.setActor(null);
-
-		return filmActor;
 	}
 
 	@Override
