@@ -215,25 +215,22 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.languageVO = languageVO;
 	}
 
-	public List<FilmActor> getFilmActors() {
-		return this.filmActors;
-	}
 
 	public List<Actor> getActors() {
 		return this.filmActors.stream().map(item -> item.getActor()).toList();
 	}
 	public void addActor(Actor actor) {
 		FilmActor filmActor = new FilmActor(this, actor);
-		getFilmActors().add(filmActor);
+		filmActors.add(filmActor);
 	}
 	public void addActor(int actorId) {
 		addActor(new Actor(actorId));
 	}
 	public void removeActor(Actor actor) {
-		var filmActor = getFilmActors().stream().filter(item -> item.getActor().equals(actor)).findFirst();
+		var filmActor = filmActors.stream().filter(item -> item.getActor().equals(actor)).findFirst();
 		if(filmActor.isEmpty())
 			return;
-		getFilmActors().remove(filmActor.get());
+		filmActors.remove(filmActor.get());
 	}
 
 	public List<FilmCategory> getFilmCategories() {
