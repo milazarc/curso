@@ -146,6 +146,12 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public int getFilmId() {
 		return this.filmId;
 	}
+	
+	public Film(@NotBlank @Size(max = 128) String title, @NotNull Language language) {
+		super();
+		this.title = title;
+		this.language = language;
+	}
 
 	public void setFilmId(int filmId) {
 		this.filmId = filmId;
@@ -219,6 +225,11 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public List<Actor> getActors() {
 		return this.filmActors.stream().map(item -> item.getActor()).toList();
 	}
+	
+	public void clearActors() {
+		filmActors = new ArrayList<FilmActor>() ;
+	}
+	
 	public void addActor(Actor actor) {
 		FilmActor filmActor = new FilmActor(this, actor);
 		filmActors.add(filmActor);
@@ -236,15 +247,19 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public List<FilmCategory> getFilmCategories() {
 		return this.filmCategories;
 	}
+	
+	public void clearCategories() {
+		filmCategories = new ArrayList<>() ;
+	}
 
 	public void setFilmCategories(List<FilmCategory> filmCategories) {
 		this.filmCategories = filmCategories;
 	}
 
-	public void addFilmCategory(Category category) {
+	public void addCategory(Category category) {
 		FilmCategory filmCategory = new FilmCategory(this, category);
 		getFilmCategories().add(filmCategory);
-		category.addFilmCategory(filmCategory);
+		category.addCategory(filmCategory);
 	}
 
 	public void removeFilmCategory(Category category) {

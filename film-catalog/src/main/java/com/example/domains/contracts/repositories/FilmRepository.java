@@ -1,7 +1,13 @@
 package com.example.domains.contracts.repositories;
 
-import com.example.domains.core.contracts.services.DomainService;
+import java.sql.Timestamp;
+import java.util.List;
 
-public interface FilmRepository extends DomainService<FilmRepository, Integer>{
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.example.domains.core.contracts.repositories.RepositoryWithProjections;
+import com.example.domains.entities.Film;
+
+public interface FilmRepository extends JpaRepository<Film, Integer>, RepositoryWithProjections {
+	List<Film> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
 }
