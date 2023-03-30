@@ -102,13 +102,13 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	}
 
 	public void addFilmActor(Film film) {
-		FilmActor filmActor = new FilmActor(this, film);
+		FilmActor filmActor = new FilmActor(film, this);
 		getFilmActors().add(filmActor);
-		film.addFilmActor(this);
+
 	}
 
 	public void removeFilmActor(Film film) {
-		FilmActor filmActor = new FilmActor(this, film);
+		FilmActor filmActor = new FilmActor(film, this);
 		getFilmActors().remove(filmActor);
 	}
 

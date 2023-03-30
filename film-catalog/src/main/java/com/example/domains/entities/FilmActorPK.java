@@ -25,7 +25,7 @@ public class FilmActorPK extends EntityBase<FilmActorPK> implements Serializable
 	}
 	
 	
-	public FilmActorPK(int actorId, int filmId) {
+	public FilmActorPK( int filmId, int actorId) {
 		super();
 		setActorId(actorId);
 		setFilmId(filmId);
