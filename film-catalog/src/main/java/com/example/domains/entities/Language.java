@@ -3,6 +3,7 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.domains.core.entities.EntityBase;
@@ -81,6 +82,14 @@ public class Language extends EntityBase<Language> implements Serializable {
 
 	public void setFilms(List<Film> films) {
 		this.films = films;
+	}
+	
+	public void clearFilms() {
+		films = new ArrayList<Film>() ;
+	}
+	
+	public void clearFilmsVO() {
+		filmsVO = new ArrayList<Film>() ;
 	}
 
 	public void addFilm(Film film) {
