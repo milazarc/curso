@@ -79,6 +79,8 @@ public class Category extends EntityBase<Category> implements Serializable {
 		this.name = name;
 	}
 
+	// Gestion de Peliculas
+	
 	public List<Film> getFilms() {
 		return this.filmCategories.stream().map(item -> item.getFilm()).toList();
 	}
