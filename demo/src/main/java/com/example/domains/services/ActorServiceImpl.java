@@ -18,7 +18,6 @@ import com.example.exceptions.NotFoundException;
 
 @Service
 public class ActorServiceImpl implements ActorService {
-
 	@Autowired
 	ActorRepository dao;
 
@@ -59,45 +58,38 @@ public class ActorServiceImpl implements ActorService {
 
 	@Override
 	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
-		if (item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
-		if (item.isInvalid()) {
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		}
-		if(dao.existsById(item.getActorId())) {
+		if(dao.existsById(item.getActorId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
-		}
+		
 		return dao.save(item);
 	}
 
 	@Override
 	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
-		if (item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
-		if (item.isInvalid()) {
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		}
-		if(dao.existsById(item.getActorId())) {
-			throw new NotFoundException("");
-		}
+		if(!dao.existsById(item.getActorId()))
+			throw new NotFoundException();
+		
 		return dao.save(item);
 	}
 
 	@Override
 	public void delete(Actor item) throws InvalidDataException {
-		if (item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
 		deleteById(item.getActorId());
-
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		dao.deleteById(id);
-
 	}
 
 }

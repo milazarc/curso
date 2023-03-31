@@ -2,8 +2,6 @@ package com.example.ejemplos;
 
 import java.util.Optional;
 
-import com.example.exceptions.InvalidDataException;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,7 +19,7 @@ public class Persona {
 	
 	public Persona(int id, String nombre) {
 		this.id = id;
-		this.nombre = nombre;
+		setNombre(nombre);
 	}
 
 	public int getId() {
@@ -49,7 +47,6 @@ public class Persona {
 		if(apellidos == null) throw new IllegalArgumentException();
 		this.apellidos = apellidos;
 	}
-	
 	public void removeApellidos() {
 		this.apellidos = null;
 	}

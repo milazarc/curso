@@ -32,21 +32,13 @@ public class StringServiceImpl implements StringService {
 	}
 
 	@Override
-	public void modify(String item) throws NotFoundException {
-		try {
-			dao.save(item);
-		} catch (InvalidDataException ex) {
-			throw new NotFoundException("No encontrado", ex);
-		}
+	public void modify(String item) throws InvalidDataException {
+		dao.save(item);
 	}
 
 	@Override
-	public void remove(Integer id) throws NotFoundException {
-		try {
-			dao.save(id.toString());
-		} catch (InvalidDataException ex) {
-			throw new NotFoundException("No encontrado", ex);
-		}
+	public void remove(Integer id) throws InvalidDataException {
+		dao.save(id.toString());
 	}
 
 }

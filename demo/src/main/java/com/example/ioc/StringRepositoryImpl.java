@@ -23,9 +23,8 @@ public class StringRepositoryImpl implements StringRepository {
 	@Override
 	public void save(String item) throws InvalidDataException {
 		if(item == "")
-			throw new ArgumentoInvalidoException();
-		if(item == "")
 			throw new InvalidDataException("La cadena no puede estar vacia");
+//		throw new ArgumentoInvalidoException();
 		System.out.println("Anterior: " + ultimo);
 		this.ultimo = item;
 		System.out.println("Guardo el item: " + item);

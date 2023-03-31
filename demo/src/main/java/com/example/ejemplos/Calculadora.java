@@ -6,13 +6,10 @@ import java.math.RoundingMode;
 public class Calculadora {
 	public double suma(double a, double b) {
 		BigDecimal rslt = BigDecimal.valueOf(a + b);
-		
-		return rslt.setScale(15, RoundingMode.HALF_DOWN).doubleValue();
-	}
+		return rslt.setScale(15, RoundingMode.HALF_DOWN).doubleValue();	}
 
 	public double divide(double a, double b) {
-		if(b == 0) throw new ArithmeticException("Divide by zero");
-		
+		if(b == 0) throw new ArithmeticException("Divide by 0");
 		return a / b;
 	}
 
