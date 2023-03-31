@@ -1,5 +1,6 @@
 package com.example.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +17,10 @@ import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import lombok.NonNull;
+
 @Service
 public class ActorServiceImpl implements ActorService {
-
 	@Autowired
 	ActorRepository dao;
 
@@ -59,45 +61,43 @@ public class ActorServiceImpl implements ActorService {
 
 	@Override
 	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
-		if (item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
-		if (item.isInvalid()) {
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		}
-		if(dao.existsById(item.getActorId())) {
+		if(dao.existsById(item.getActorId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
-		}
+		
 		return dao.save(item);
 	}
 
 	@Override
 	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
-		if (item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
-		if (item.isInvalid()) {
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		}
-		if(dao.existsById(item.getActorId())) {
-			throw new NotFoundException("");
-		}
+		if(!dao.existsById(item.getActorId()))
+			throw new NotFoundException();
+		
 		return dao.save(item);
 	}
 
 	@Override
 	public void delete(Actor item) throws InvalidDataException {
-		if (item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
 		deleteById(item.getActorId());
-
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		dao.deleteById(id);
+	}
 
+	@Override
+	public List<Actor> novedades(@NonNull Timestamp fecha) {
+		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.example.domains.services;
 
-import java.security.spec.RSAOtherPrimeInfo;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.ctc.wstx.sr.ElemAttrs;
 import com.example.domains.contracts.repositories.FilmRepository;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Film;
@@ -72,25 +70,26 @@ public class FilmServiceImpl implements FilmService {
 		if(dao.existsById(item.getFilmId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
 		var actores = item.getActors();
-		var categorias = item.getFilmCategories();
+		var categorias = item.getCategories();
 		item.clearActors();
 		item.clearCategories();
 		var newItem = dao.save(item);
-		actores.forEach(ElemAttrs -> newItem.addActor(ElemAttrs));
-		categorias.forEach(ElemAttrs -> newItem.addCategory(ElemAttrs.getCategory()));
-		return dao.save(item);
+		newItem.setActors(actores);
+		newItem.setCategories(categorias);
+		return dao.save(newItem);
 	}
 
 	@Override
+	@Transactional
 	public Film modify(Film item) throws NotFoundException, InvalidDataException {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		if(!dao.existsById(item.getFilmId()))
+		var leido = dao.findById(item.getFilmId());
+		if(leido.isEmpty())
 			throw new NotFoundException();
-		
-		return dao.save(item);
+		return dao.save(item.merge(leido.get()));
 	}
 
 	@Override

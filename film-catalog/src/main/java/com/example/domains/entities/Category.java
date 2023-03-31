@@ -79,23 +79,31 @@ public class Category extends EntityBase<Category> implements Serializable {
 		this.name = name;
 	}
 
-	public List<FilmCategory> getCategories() {
-		return this.filmCategories;
+	public List<Category> getCategories() {
+		return this.filmCategories.stream().map(item -> item.getCategory()).toList();
 	}
 
-	public void setFilmCategories(List<FilmCategory> filmCategories) {
-		this.filmCategories = filmCategories;
+	public void setCategories(List<Film> source) {
+		if(filmCategories == null || !filmCategories.isEmpty()) clearCategories();
+		source.forEach(item -> addFilm(item));
+	}
+	
+	public void clearCategories() {
+		filmCategories = new ArrayList<FilmCategory>() ;
 	}
 
-	public void addCategory(FilmCategory filmCategory) {
+	public void addFilm(Film film) {
+		FilmCategory filmCategory = new FilmCategory(film, this);
 		filmCategories.add(filmCategory);
-		filmCategory.setCategory(this);
 	}
 
-	public void removeFilmCategory(FilmCategory filmCategory) {
-		filmCategories.remove(filmCategory);
-		filmCategory.setCategory(null);
+	public void removeFilm(Film film) {
+		var filmCategory = this.filmCategories.stream().filter(item -> item.getFilm().equals(film)).findFirst();
+		if(filmCategory.isEmpty())
+			return;
+		this.filmCategories.remove(filmCategory.get());
 	}
+
 
 	@Override
 	public int hashCode() {

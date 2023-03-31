@@ -85,14 +85,10 @@ public class Language extends EntityBase<Language> implements Serializable {
 
 	public void addFilm(Film film) {
 		getFilms().add(film);
-		film.setLanguage(this);
 	}
 
-	public Film removeFilm(Film film) {
+	public void removeFilm(Film film) {
 		getFilms().remove(film);
-		film.setLanguage(null);
-
-		return film;
 	}
 
 	public List<Film> getFilmsVO() {
@@ -103,18 +99,12 @@ public class Language extends EntityBase<Language> implements Serializable {
 		this.filmsVO = filmsVO;
 	}
 
-	public Film addFilmsVO(Film filmsVO) {
+	public void addFilmVO(Film filmsVO) {
 		getFilmsVO().add(filmsVO);
-		filmsVO.setLanguageVO(this);
-
-		return filmsVO;
 	}
 
-	public Film removeFilmsVO(Film filmsVO) {
+	public void removeFilmVO(Film filmsVO) {
 		getFilmsVO().remove(filmsVO);
-		filmsVO.setLanguageVO(null);
-
-		return filmsVO;
 	}
 
 }
