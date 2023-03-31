@@ -79,16 +79,16 @@ public class Category extends EntityBase<Category> implements Serializable {
 		this.name = name;
 	}
 
-	public List<Category> getCategories() {
-		return this.filmCategories.stream().map(item -> item.getCategory()).toList();
+	public List<Film> getFilms() {
+		return this.filmCategories.stream().map(item -> item.getFilm()).toList();
 	}
 
-	public void setCategories(List<Film> source) {
-		if(filmCategories == null || !filmCategories.isEmpty()) clearCategories();
+	public void setFilms(List<Film> source) {
+		if(filmCategories == null || !filmCategories.isEmpty()) clearFilms();
 		source.forEach(item -> addFilm(item));
 	}
 	
-	public void clearCategories() {
+	public void clearFilms() {
 		filmCategories = new ArrayList<FilmCategory>() ;
 	}
 
@@ -120,6 +120,21 @@ public class Category extends EntityBase<Category> implements Serializable {
 			return false;
 		Category other = (Category) obj;
 		return categoryId == other.categoryId;
+	}
+	
+	public Category merge(Category target) {
+		target.name = name;
+		
+		// Borra las peliculas que sobran
+		target.getFilms().stream()
+			.filter(item -> !getFilms().contains(item))
+			.forEach(item -> target.removeFilm(item));
+		// Añade las peliculas que faltan
+		getFilms().stream()
+			.filter(item -> !target.getFilms().contains(item))
+			.forEach(item -> target.addFilm(item));
+		
+		return target;
 	}
 
 	@Override

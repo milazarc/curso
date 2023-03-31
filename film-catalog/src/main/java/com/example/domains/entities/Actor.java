@@ -119,7 +119,6 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		this.filmActors.remove(filmActor.get());
 	}
 
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(actorId);
@@ -137,6 +136,21 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		return actorId == other.actorId;
 	}
 
+	public Actor merge(Actor target) {
+		target.firstName = firstName;
+		target.lastName = lastName;
+
+		// Borra las peliculas que sobran
+		target.getFilms().stream()
+			.filter(item -> !getFilms().contains(item))
+			.forEach(item -> target.removeFilm(item));
+		// Añade las peliculas que faltan
+		getFilms().stream()
+			.filter(item -> !target.getFilms().contains(item))
+			.forEach(item -> target.addFilm(item));
+		return target;
+	}
+	
 	@Override
 	public String toString() {
 		return "Actor [actorId=" + actorId + ", firstName=" + firstName + ", lastName=" + lastName + ", lastUpdate="
