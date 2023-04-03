@@ -8,4 +8,6 @@ import com.example.domains.entities.Film;
 
 public interface FilmService extends ProjectionDomainService<Film, Integer> {
 	List<Film> novedades(Timestamp fecha);
+	
+	List<Film> recientes(short year);
 }

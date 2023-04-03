@@ -108,5 +108,10 @@ public class FilmServiceImpl implements FilmService {
 	public List<Film> novedades(@NonNull Timestamp fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
+	
+	@Override
+	public List<Film> recientes(short year){
+		return dao.findByReleaseYearGreaterThan(year);
+	}
 
 }
