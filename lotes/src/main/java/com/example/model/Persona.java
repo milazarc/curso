@@ -1,11 +1,11 @@
-package com.example.demo.model;
+package com.example.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class PersonaDTO {
+public class Persona {
 	private long id;
-	private String nombre, apellidos, correo, sexo, ip;
+	private String nombre, correo, ip;
 }
