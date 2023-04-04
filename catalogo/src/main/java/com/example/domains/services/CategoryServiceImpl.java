@@ -79,5 +79,10 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<Category> novedades(Timestamp fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
+	
+	@Override
+	public 	List<Category> funcionPrueba(){
+		return dao.findAll();	
+	}
 
 }

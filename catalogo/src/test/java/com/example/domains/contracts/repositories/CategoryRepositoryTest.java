@@ -9,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.example.domains.contracts.services.CategoryService;
+
 
 
 @DataJpaTest
@@ -30,6 +32,8 @@ class CategoryRepositoryTest {
 		fail("Not yet implemented");
 		
 		daoCategoryRepository.findAll();
+		categoryService.funcionPrueba();
+		System.out.println(categoryService.funcionPrueba());
 	}
 
 }

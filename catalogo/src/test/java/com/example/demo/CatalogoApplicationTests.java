@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.domains.contracts.repositories.CategoryRepository;
-import com.example.domains.contracts.repositories.CategoryService;
+import com.example.domains.contracts.services.CategoryService;
+
 
 @SpringBootTest
 class CatalogoApplicationTests {
@@ -22,6 +23,7 @@ class CatalogoApplicationTests {
 	
 	@Autowired
 	CategoryService categoryService;
+
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -29,9 +31,13 @@ class CatalogoApplicationTests {
 
 	@Test
 	void test() {
-		fail("Not yet implemented");
+
+		categoryService.funcionPrueba().forEach(System.out::println);
+		System.out.println("-------------------------");
+		daoCategoryRepository.findAll().forEach(System.out::println);
+		System.out.println("-------------------------");
+		System.out.println(categoryService.funcionPrueba());
 		
-		daoCategoryRepository.findAll();
 	}
 
 }
