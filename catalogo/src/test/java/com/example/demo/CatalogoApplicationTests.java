@@ -8,7 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.domains.contracts.repositories.CategoryRepository;
+import com.example.domains.contracts.repositories.FilmRepository;
+import com.example.domains.contracts.repositories.LanguageRepository;
 import com.example.domains.contracts.services.CategoryService;
+import com.example.domains.entities.Language;
+
+import jakarta.transaction.Transactional;
 
 
 @SpringBootTest
@@ -23,6 +28,12 @@ class CatalogoApplicationTests {
 	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	FilmRepository daoFilmRepository;
+	
+	@Autowired
+	LanguageRepository languageRepository;
 
 	
 	@BeforeEach
@@ -30,6 +41,7 @@ class CatalogoApplicationTests {
 	}
 
 	@Test
+	@Transactional
 	void test() {
 
 		categoryService.funcionPrueba().forEach(System.out::println);
@@ -37,6 +49,10 @@ class CatalogoApplicationTests {
 		daoCategoryRepository.findAll().forEach(System.out::println);
 		System.out.println("-------------------------");
 		System.out.println(categoryService.funcionPrueba());
+		System.out.println("-------------------------");
+		daoFilmRepository.findAll().forEach(System.out::println);
+		System.out.println("-------------------------");
+		languageRepository.findAll().forEach(System.out::println);
 		
 	}
 
