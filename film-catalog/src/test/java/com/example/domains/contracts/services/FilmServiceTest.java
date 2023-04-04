@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.example.domains.contracts.repositories.FilmRepository;
 
-@Disabled
+
 @DataJpaTest
 @ComponentScan(basePackages = "com.example")
 class FilmServiceTest {

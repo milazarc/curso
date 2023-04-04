@@ -111,7 +111,7 @@ public class FilmServiceImpl implements FilmService {
 	
 	@Override
 	public List<Film> recientes(short year){
-		return dao.findByReleaseYearGreaterThan(year);
+		return dao.findAll();
 	}
 
 }
