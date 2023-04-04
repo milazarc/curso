@@ -82,7 +82,7 @@ class ActorServiceTest {
 
 		@Test
 		void testDeleteById() throws DuplicateKeyException, InvalidDataException {
-			Actor actor = new Actor(0, "NOMBREPRUEBA", "APELLIDOPRUEBA");
+			Actor actor = new Actor(202, "NOMBREPRUEBA", "APELLIDOPRUEBA");
 			actorService.add(actor);
 			actorService.deleteById(202);
 			assertTrue(daoActorRepository.findByActorIdEquals(202).size() == 0);
