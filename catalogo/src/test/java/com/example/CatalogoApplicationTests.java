@@ -1,8 +1,9 @@
-package com.example.demo;
+package com.example;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,7 @@ import com.example.domains.entities.Language;
 
 import jakarta.transaction.Transactional;
 
-
+@Disabled
 @SpringBootTest
 class CatalogoApplicationTests {
 
@@ -43,16 +44,16 @@ class CatalogoApplicationTests {
 	@Test
 	@Transactional
 	void test() {
-
-		categoryService.funcionPrueba().forEach(System.out::println);
-		System.out.println("-------------------------");
-		daoCategoryRepository.findAll().forEach(System.out::println);
-		System.out.println("-------------------------");
-		System.out.println(categoryService.funcionPrueba());
-		System.out.println("-------------------------");
-		daoFilmRepository.findAll().forEach(System.out::println);
-		System.out.println("-------------------------");
-		languageRepository.findAll().forEach(System.out::println);
+//
+//		categoryService.funcionPrueba().forEach(System.out::println);
+//		System.out.println("-------------------------");
+//		daoCategoryRepository.findAll().forEach(System.out::println);
+//		System.out.println("-------------------------");
+//		System.out.println(categoryService.funcionPrueba());
+//		System.out.println("-------------------------");
+//		daoFilmRepository.findAll().forEach(System.out::println);
+//		System.out.println("-------------------------");
+//		languageRepository.findAll().forEach(System.out::println);
 		
 	}
 

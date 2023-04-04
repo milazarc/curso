@@ -3,7 +3,6 @@ package com.example.domains.core.contracts.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.domains.entities.Film;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;

@@ -1,16 +1,8 @@
 package com.example.domains.contracts.services;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 import com.example.domains.core.contracts.services.ProjectionDomainService;
 import com.example.domains.entities.Actor;
-import com.example.domains.entities.Film;
-
 
 public interface ActorService extends ProjectionDomainService<Actor, Integer> {
-	List<Actor> novedades(Timestamp fecha);
-	
-	void createActor(int actorId, String firstName, String lastName, List<Film> films);
-	
+
 }

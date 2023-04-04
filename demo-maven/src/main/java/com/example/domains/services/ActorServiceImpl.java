@@ -1,6 +1,5 @@
 package com.example.domains.services;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,12 +12,9 @@ import org.springframework.stereotype.Service;
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
-import com.example.domains.entities.Film;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
-
-import lombok.NonNull;
 
 @Service
 public class ActorServiceImpl implements ActorService {
@@ -80,10 +76,8 @@ public class ActorServiceImpl implements ActorService {
 			throw new InvalidDataException(item.getErrorsMessage());
 		if(!dao.existsById(item.getActorId()))
 			throw new NotFoundException();
-		var leido = dao.findById(item.getActorId());
-		if(leido.isEmpty())
-			throw new NotFoundException();
-		return dao.save(item.merge(leido.get()));
+		
+		return dao.save(item);
 	}
 
 	@Override
@@ -96,18 +90,6 @@ public class ActorServiceImpl implements ActorService {
 	@Override
 	public void deleteById(Integer id) {
 		dao.deleteById(id);
-	}
-
-	@Override
-	public List<Actor> novedades(@NonNull Timestamp fecha) {
-		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
-	}
-	
-	@Override
-	public void createActor(int actorId, String firstName, String lastName, List<Film> films) {
-		Actor actor = new Actor(actorId, firstName, lastName);
-		actor.setFilms(films);
-		dao.save(actor);
 	}
 
 }
