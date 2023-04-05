@@ -45,7 +45,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="category")
 	@JsonIgnore
-	private List<FilmCategory> filmCategories;
+	private List<FilmCategory> filmCategories = new ArrayList<FilmCategory>();
 
 	public Category() {
 	}
@@ -65,10 +65,6 @@ public class Category extends EntityBase<Category> implements Serializable {
 
 	public Timestamp getLastUpdate() {
 		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public String getName() {
