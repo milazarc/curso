@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.core.SpaceCamelCase;
+
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.DisplayName.class)
+@DisplayNameGeneration(SpaceCamelCase.class)
 class LanguageTest {
 
 	Language language;
