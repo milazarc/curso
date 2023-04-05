@@ -76,7 +76,7 @@ class CategoryTest {
 		Film filmThree = new Film(3);
 		filmThree.setTitle("Pelicula 3");
 		films.add(filmThree);
-		category.setFilms(films);
+		category.addFilm(filmThree);
 		assertEquals(films, category.getFilms());
 	}
 

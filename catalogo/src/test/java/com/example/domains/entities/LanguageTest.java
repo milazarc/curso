@@ -77,7 +77,7 @@ class LanguageTest {
 		Film filmThree = new Film(3);
 		filmThree.setTitle("Pelicula 3");
 		films.add(filmThree);
-		language.setFilms(films);
+		language.addFilm(filmThree);
 		assertEquals(films, language.getFilms());
 	}
 
@@ -114,7 +114,7 @@ class LanguageTest {
 		Film filmThree = new Film(3);
 		filmThree.setTitle("Pelicula 3");
 		filmsVO.add(filmThree);
-		language.setFilmsVO(filmsVO);
+		language.addFilmVO(filmThree);
 		assertEquals(filmsVO, language.getFilmsVO());
 	}
 
