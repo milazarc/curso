@@ -16,13 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.sql.init.dependency.AbstractBeansOfTypeDatabaseInitializerDetector;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.support.DaoSupport;
+import org.springframework.stereotype.Service;
 
 import com.example.core.SpaceCamelCase;
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.Film;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.transaction.Transactional;
 
@@ -86,6 +90,33 @@ class ActorServiceTest {
 			actorService.add(actor);
 			actorService.deleteById(202);
 			assertTrue(daoActorRepository.findByActorIdEquals(202).size() == 0);
+		}
+		
+		@Test
+		void testCreateActor() {
+			actorService.deleteById(300);
+			List<Film> filmactors = new ArrayList<Film>();
+			Film filmOne = new Film(1);
+			filmOne.setTitle("Pelicula 1");
+			filmactors.add(filmOne);
+			Film filmTwo = new Film(2);
+			filmOne.setTitle("Pelicula 2");
+			filmactors.add(filmTwo);
+			actorService.createActor(300, "PEPITO", "GRILLITO", filmactors);
+			
+			Actor actor = actorService.getOne(300).get();
+			assertEquals(300, actor.getActorId());
+			assertEquals("PEPITO", actor.getFirstName());
+			assertEquals("GRILLITO", actor.getLastName());
+			assertEquals(filmactors, actor.getFilms());
+		}
+	}
+	
+	class Ko{
+		
+		@Test
+		void testCreateErroneo() {
+			
 		}
 	}
 }
