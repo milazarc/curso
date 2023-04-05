@@ -32,6 +32,8 @@ import org.springframework.http.HttpStatus;
 @RestController
 @RequestMapping(path = { "/api/actores/v1", "/api/actors" })
 public class ActorResource {
+	
+	@Autowired
 	private ActorService srv;
 
 	@GetMapping
@@ -68,7 +70,7 @@ public class ActorResource {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable int id) {
-		// ..
+		srv.deleteById(id);
 	}
 
 }
