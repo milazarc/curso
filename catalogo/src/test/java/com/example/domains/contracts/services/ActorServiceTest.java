@@ -75,7 +75,6 @@ class ActorServiceTest {
 		}
 
 		@Test
-		@Transactional
 		void testModify() throws NotFoundException, InvalidDataException {
 			Actor actor = actorService.getOne(200).get();
 			actor.setLastName("PRUEBAAAAAAAA");
