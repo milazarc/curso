@@ -59,7 +59,6 @@ class ActorServiceTest {
 		@Test
 		void testGetOne() {
 			Optional<Actor> actor = actorService.getOne(1);
-			Actor actor1 = new Actor();
 			assertEquals(1, actor.get().getActorId());
 		}
 
