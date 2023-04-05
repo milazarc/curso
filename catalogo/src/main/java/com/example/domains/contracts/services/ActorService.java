@@ -11,6 +11,6 @@ import com.example.domains.entities.Film;
 public interface ActorService extends ProjectionDomainService<Actor, Integer> {
 	List<Actor> novedades(Timestamp fecha);
 	
-	void createActor(int actorId, String firstName, String lastName, List<Film> films);
+
 	
 }

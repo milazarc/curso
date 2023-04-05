@@ -102,12 +102,5 @@ public class ActorServiceImpl implements ActorService {
 	public List<Actor> novedades(@NonNull Timestamp fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
-	
-	@Override
-	public void createActor(int actorId, String firstName, String lastName, List<Film> films) {
-		Actor actor = new Actor(actorId, firstName, lastName);
-		actor.setFilms(films);
-		dao.save(actor);
-	}
 
 }

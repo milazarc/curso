@@ -41,6 +41,9 @@ class ActorServiceTest {
 	@Autowired
 	ActorService actorService;
 	
+	@Autowired
+	FilmService filmService;
+	
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -61,15 +64,13 @@ class ActorServiceTest {
 		}
 
 		@Test
-		@Transactional
 		void testAdd() throws DuplicateKeyException, InvalidDataException {
-			daoActorRepository.deleteByFirstName("NOMBREPRUEBAA");
-			daoActorRepository.deleteByFirstName("NOMBREPRUEBA");
 			Actor actor = new Actor(0, "NOMBREPRUEBAA", "APELLIDOPRUEBA");
 			actorService.add(actor);
 			
 			Actor actor2 = daoActorRepository.findByFirstName("NOMBREPRUEBAA");
 			assertEquals("NOMBREPRUEBAA", actor2.getFirstName());
+			actorService.deleteById(actor2.getActorId());
 			
 		}
 
@@ -85,37 +86,27 @@ class ActorServiceTest {
 		}
 
 		@Test
+		@Transactional
 		void testDeleteById() throws DuplicateKeyException, InvalidDataException {
-			Actor actor = new Actor(202, "NOMBREPRUEBA", "APELLIDOPRUEBA");
+			Actor actor = new Actor(240, "NOMBREPRUEBA", "APELLIDOPRUEBA");
 			actorService.add(actor);
-			actorService.deleteById(202);
-			assertTrue(daoActorRepository.findByActorIdEquals(202).size() == 0);
+			Actor actor2 = daoActorRepository.findByFirstName("NOMBREPRUEBA");
+			actorService.deleteById(actor2.getActorId());
+			assertTrue(daoActorRepository.findByActorIdEquals(actor2.getActorId()).size() == 0);
 		}
 		
-		@Test
-		void testCreateActor() {
-			actorService.deleteById(300);
-			List<Film> filmactors = new ArrayList<Film>();
-			Film filmOne = new Film(1);
-			filmOne.setTitle("Pelicula 1");
-			filmactors.add(filmOne);
-			Film filmTwo = new Film(2);
-			filmOne.setTitle("Pelicula 2");
-			filmactors.add(filmTwo);
-			actorService.createActor(300, "PEPITO", "GRILLITO", filmactors);
-			
-			Actor actor = actorService.getOne(300).get();
-			assertEquals(300, actor.getActorId());
-			assertEquals("PEPITO", actor.getFirstName());
-			assertEquals("GRILLITO", actor.getLastName());
-			assertEquals(filmactors, actor.getFilms());
-		}
+
 	}
 	
+	@Nested
 	class Ko{
 		
 		@Test
-		void testCreateErroneo() {
+		void testAddErroneo() throws DuplicateKeyException, InvalidDataException {
+			Actor actor = new Actor(0, "NOMBREPRUEBABBB", "APELLIDOPRUEBAaaaaaaa");
+			
+			
+			assertThrows(InvalidDataException.class, () -> actorService.add(actor));
 			
 		}
 	}
