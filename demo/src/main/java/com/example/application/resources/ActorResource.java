@@ -2,6 +2,7 @@ package com.example.application.resources;
 import java.net.URI;
 import java.util.List;
 
+import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.hibernate.boot.jaxb.hbm.spi.JaxbHbmNativeQueryCollectionLoadReturnType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jmx.export.assembler.InterfaceBasedMBeanInfoAssembler;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
+import com.example.domains.entities.dtos.ElementoDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
@@ -63,11 +66,14 @@ public class ActorResource {
 	
 	@GetMapping(path = "/{id}/pelis")
 	@Transactional
-	public ActorDTO getPelis(@PathVariable int id) throws NotFoundException {
+	public List<ElementoDTO<Integer, String>> getPelis(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return ActorDTO.from(item.get());
+		return item.get().getFilmActors().stream().map(o -> new ElementoDTO<>(
+				o.getFilm().getFilmId(), 
+				o.getFilm().getTitle()))
+				.toList();
 	}
 	
 	
