@@ -3,6 +3,9 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
+
+import com.example.domains.core.entities.EntityBase;
 
 
 /**
@@ -33,6 +36,12 @@ public class FilmCategory implements Serializable {
 
 	public FilmCategory() {
 	}
+	
+	public FilmCategory(Film film, Category category) {
+		setCategory(category);
+		setFilm(film);
+		setId(new FilmCategoryPK(film.getFilmId(), category.getCategoryId()));
+	}
 
 	public FilmCategoryPK getId() {
 		return this.id;
@@ -44,10 +53,6 @@ public class FilmCategory implements Serializable {
 
 	public Timestamp getLastUpdate() {
 		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public Category getCategory() {
@@ -65,5 +70,29 @@ public class FilmCategory implements Serializable {
 	public void setFilm(Film film) {
 		this.film = film;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FilmCategory other = (FilmCategory) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "FilmCategory [id=" + id + ", lastUpdate=" + lastUpdate + ", category=" + category + ", film=" + film
+				+ "]";
+	}
+	
 
 }

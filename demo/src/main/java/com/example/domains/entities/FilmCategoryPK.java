@@ -1,6 +1,9 @@
 package com.example.domains.entities;
 
 import java.io.Serializable;
+
+import com.example.domains.core.entities.EntityBase;
+
 import jakarta.persistence.*;
 
 /**
@@ -16,20 +19,26 @@ public class FilmCategoryPK implements Serializable {
 	private int filmId;
 
 	@Column(name="category_id", insertable=false, updatable=false, unique=true, nullable=false)
-	private byte categoryId;
+	private int categoryId;
 
 	public FilmCategoryPK() {
 	}
+	
+	public FilmCategoryPK(int filmId, int categoryId) {
+		setFilmId(filmId);
+		setCategoryId(categoryId);
+	}
+	
 	public int getFilmId() {
 		return this.filmId;
 	}
 	public void setFilmId(int filmId) {
 		this.filmId = filmId;
 	}
-	public byte getCategoryId() {
+	public int getCategoryId() {
 		return this.categoryId;
 	}
-	public void setCategoryId(byte categoryId) {
+	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
 
