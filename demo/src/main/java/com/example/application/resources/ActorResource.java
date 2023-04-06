@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.ActorShort;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
@@ -26,13 +27,11 @@ import com.example.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
 
-
 import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping(path = { "/api/actores/v1", "/api/actors" })
 public class ActorResource {
-	
 	@Autowired
 	private ActorService srv;
 
@@ -44,9 +43,8 @@ public class ActorResource {
 	@GetMapping(path = "/{id}")
 	public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
-		if(item.isEmpty()) {
+		if(item.isEmpty())
 			throw new NotFoundException();
-		}
 		return ActorDTO.from(item.get());
 	}
 	
