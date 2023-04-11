@@ -32,23 +32,23 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.core.SpaceCamelCase;
-import com.example.domains.contracts.services.CategoryService;
-import com.example.domains.entities.Category;
+import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Film;
-import com.example.domains.entities.dtos.CategoryDTO;
+import com.example.domains.entities.Language;
+import com.example.domains.entities.dtos.LanguageDTO;
 import com.example.exceptions.InvalidDataException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(CategoryResource.class)
+@WebMvcTest(LanguageResource.class)
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 @DisplayNameGeneration(SpaceCamelCase.class)
-class CategoryResourceTest {
+class LanguageResourceTest {
 	@Autowired
     private MockMvc mockMvc;
 	
 	@MockBean
-	private CategoryService srvCategoryService;
+	private LanguageService srvLanguageService;
 
 	@Autowired
 	ObjectMapper objectMapper;
@@ -66,13 +66,13 @@ class CategoryResourceTest {
 	class Affirmative{
 		@Test
 		void testGetAllString() throws Exception {
-			List<CategoryDTO> listaCategoryDTOs = new ArrayList<>(
+			List<LanguageDTO> listaLanguageDTOs = new ArrayList<>(
 					Arrays.asList(
-							new CategoryDTO(1, "Categoria 1"),
-							new CategoryDTO(2, "Categoria 2"),
-							new CategoryDTO(3, "Categoria 3")));
-			when(srvCategoryService.getByProjection(CategoryDTO.class)).thenReturn(listaCategoryDTOs);
-			mockMvc.perform(get("/api/categorias/v1"))
+							new LanguageDTO(1, "Lengua 1"),
+							new LanguageDTO(2, "Lengua 2"),
+							new LanguageDTO(3, "Lengua 3")));
+			when(srvLanguageService.getByProjection(LanguageDTO.class)).thenReturn(listaLanguageDTOs);
+			mockMvc.perform(get("/api/idiomas/v1"))
 				.andExpectAll(
 						status().isOk(), 
 						content().contentType("application/json"),
@@ -81,14 +81,14 @@ class CategoryResourceTest {
 
 		@Test
 		void testGetAllPageable() throws Exception {
-			List<CategoryDTO> listaCategoryDTOs = new ArrayList<>(
+			List<LanguageDTO> listaLanguageDTOs = new ArrayList<>(
 					Arrays.asList(
-							new CategoryDTO(1, "Categoria 1"),
-							new CategoryDTO(2, "Categoria 2"),
-							new CategoryDTO(3, "Categoria 3")));
-			when(srvCategoryService.getByProjection(PageRequest.of(0, 20), CategoryDTO.class))
-				.thenReturn(new PageImpl<>(listaCategoryDTOs));
-			mockMvc.perform(get("/api/categorias/v1").queryParam("page", "0"))
+							new LanguageDTO(1, "Lengua 1"),
+							new LanguageDTO(2, "Lengua 2"),
+							new LanguageDTO(3, "Lengua 3")));
+			when(srvLanguageService.getByProjection(PageRequest.of(0, 20), LanguageDTO.class))
+				.thenReturn(new PageImpl<>(listaLanguageDTOs));
+			mockMvc.perform(get("/api/idiomas/v1").queryParam("page", "0"))
 				.andExpectAll(
 					status().isOk(), 
 					content().contentType("application/json"),
@@ -99,10 +99,10 @@ class CategoryResourceTest {
 		@Test
 		void testGetOne() throws Exception {
 			int id = 1;
-			var ele = new Category(1, "Categoria 1");
+			var ele = new Language(1, "Lengua 1");
 			
-			when(srvCategoryService.getOne(id)).thenReturn(Optional.of(ele));
-			mockMvc.perform(get("/api/categorias/v1/{id}", id))
+			when(srvLanguageService.getOne(id)).thenReturn(Optional.of(ele));
+			mockMvc.perform(get("/api/idiomas/v1/{id}", id))
 				.andExpect(status().isOk())
 		        .andExpect(jsonPath("$.id").value(id))
 		        .andExpect(jsonPath("$.nombre").value(ele.getName()))
@@ -112,18 +112,19 @@ class CategoryResourceTest {
 		@Test
 		void testGetPelis() throws Exception {
 			int id = 1;
-			Category category = new Category(id, "Categoria 1");
+			var ele = new Language(1, "Lengua 1");
+			
 			List<Film> listFilms = new ArrayList<>(
 					Arrays.asList(
 							new Film(1, "Pelicula 1"),
 							new Film(2, "Pelicula 2"),
 							new Film(3, "Pelicula 3"),
 							new Film(4, "Pelicula 4")));
-			category.setFilms(listFilms);
+			ele.setFilms(listFilms);
 			
-			when(srvCategoryService.getOne(id)).thenReturn(Optional.of(category));
+			when(srvLanguageService.getOne(id)).thenReturn(Optional.of(ele));
 			
-			mockMvc.perform(get("/api/categorias/v1/{id}/pelis", id))
+			mockMvc.perform(get("/api/idiomas/v1/{id}/pelis", id))
 				.andExpectAll(
 						status().isOk(), 
 						content().contentType("application/json"),
@@ -132,27 +133,52 @@ class CategoryResourceTest {
 		}
 
 		@Test
+		void testGetPelisVo() throws Exception {
+			int id = 1;
+			var ele = new Language(1, "Lengua 1");
+			
+			List<Film> listFilms = new ArrayList<>(
+					Arrays.asList(
+							new Film(1, "PeliculaVo 1"),
+							new Film(2, "PeliculaVo 2"),
+							new Film(3, "PeliculaVo 3"),
+							new Film(4, "PeliculaVo 4"),
+							new Film(5, "PeliculaVo 5")));
+			ele.setFilmsVO(listFilms);
+			
+			when(srvLanguageService.getOne(id)).thenReturn(Optional.of(ele));
+			
+			mockMvc.perform(get("/api/idiomas/v1/{id}/pelisVO", id))
+				.andExpectAll(
+						status().isOk(), 
+						content().contentType("application/json"),
+						jsonPath("$.size()").value(5))
+		        .andDo(print());
+		}
+		
+		
+		@Test
 		void testCreate() throws JsonProcessingException, Exception {
 			int id = 1;
-			var ele = new Category(id, "Categoria 1");
+			var ele = new Language(1, "Lengua 1");
 			
-			when(srvCategoryService.add(ele)).thenReturn(ele);
-			mockMvc.perform(post("/api/categorias/v1")
+			when(srvLanguageService.add(ele)).thenReturn(ele);
+			mockMvc.perform(post("/api/idiomas/v1")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(CategoryDTO.from(ele))))
+				.content(objectMapper.writeValueAsString(LanguageDTO.from(ele))))
 				.andExpect(status().isCreated())
-		        .andExpect(header().string("Location", "http://localhost/api/categorias/v1/1"))
+		        .andExpect(header().string("Location", "http://localhost/api/idiomas/v1/1"))
 		        .andDo(print());
 		}
 
 		@Test
 		void testUpdate() throws JsonProcessingException, Exception {
 			int id = 1;
-			var ele = new Category(id, "Categoria 1");
-			when(srvCategoryService.modify(ele)).thenReturn(ele);
-			mockMvc.perform(put("/api/categorias/v1/{id}", id)
+			var ele = new Language(1, "Lengua 1");
+			when(srvLanguageService.modify(ele)).thenReturn(ele);
+			mockMvc.perform(put("/api/idiomas/v1/{id}", id)
 					.contentType(MediaType.APPLICATION_JSON)
-					.content(objectMapper.writeValueAsString(CategoryDTO.from(ele))))
+					.content(objectMapper.writeValueAsString(LanguageDTO.from(ele))))
 					.andExpect(status().isNoContent())
 			        .andDo(print());
 		}
@@ -160,9 +186,9 @@ class CategoryResourceTest {
 		@Test
 		void testDelete() throws Exception {
 			int id = 1;
-			var ele = new Category(id, "Categoria 1");
-			srvCategoryService.add(ele);
-			mockMvc.perform(delete("/api/categorias/v1/{id}", 1))
+			var ele = new Language(1, "Lengua 1");
+			srvLanguageService.add(ele);
+			mockMvc.perform(delete("/api/idiomas/v1/{id}", 1))
 					.andExpect(status().isNoContent())
 			        .andDo(print());
 		}
@@ -175,9 +201,9 @@ class CategoryResourceTest {
 		@Test
 		void testGetOne404() throws Exception {
 			int id = 1;
-			var ele = new Category(id, "Categoria 1");
-			when(srvCategoryService.getOne(id)).thenReturn(Optional.empty());
-			mockMvc.perform(get("/api/categorias/v1/{id}", id))
+			var ele = new Language(1, "Lengua 1");
+			when(srvLanguageService.getOne(id)).thenReturn(Optional.empty());
+			mockMvc.perform(get("/api/idiomas/v1/{id}", id))
 				.andExpect(status().isNotFound())
 				.andExpect(jsonPath("$.title").value("Not Found"))
 		        .andDo(print());
@@ -186,10 +212,10 @@ class CategoryResourceTest {
 		@Test
 		void testUpdateFailIdentificadores() throws JsonProcessingException, Exception {
 			int id = 2;
-			var ele = new Category(1, "Categoria 1");
-			mockMvc.perform(put("/api/categorias/v1/{id}", id)
+			var ele = new Language(1, "Lengua 1");
+			mockMvc.perform(put("/api/idiomas/v1/{id}", id)
 					.contentType(MediaType.APPLICATION_JSON)
-					.content(objectMapper.writeValueAsString(CategoryDTO.from(ele))))
+					.content(objectMapper.writeValueAsString(LanguageDTO.from(ele))))
 					.andExpect(status().isBadRequest())
 			        .andDo(print());
 		}
@@ -198,18 +224,18 @@ class CategoryResourceTest {
 		@Test
 		void testUpdateFailContent() throws JsonProcessingException, Exception {
 			int id = 1;
-			var ele = new Category(1, "");
-			when(srvCategoryService.modify(ele)).thenThrow(InvalidDataException.class);
-			mockMvc.perform(put("/api/categorias/v1/{id}", id)
+			var ele = new Language(1, "Lengua 1");
+			when(srvLanguageService.modify(ele)).thenThrow(InvalidDataException.class);
+			mockMvc.perform(put("/api/idiomas/v1/{id}", id)
 					.contentType(MediaType.APPLICATION_JSON)
-					.content(objectMapper.writeValueAsString(CategoryDTO.from(ele))))
+					.content(objectMapper.writeValueAsString(LanguageDTO.from(ele))))
 					.andExpect(status().isBadRequest())
 			        .andDo(print());
 		}
 		
 		@Test
 		void testDeleteErroneo() throws JsonProcessingException, Exception {
-			mockMvc.perform(delete("/api/categorias/v1/{id}", "1k"))
+			mockMvc.perform(delete("/api/idiomas/v1/{id}", "1k"))
 					.andExpect(status().isBadRequest())
 			        .andDo(print());
 		}
