@@ -150,6 +150,13 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public Film(int filmId) {
 		this.filmId = filmId;
 	}
+	
+	public Film(int filmId, 
+			@NotBlank @Size(max = 128) 
+			String title) {
+		this.filmId = filmId;
+		this.title = title;
+	}
 
 	public Film(int filmId, 
 			@NotBlank @Size(max = 128) 
