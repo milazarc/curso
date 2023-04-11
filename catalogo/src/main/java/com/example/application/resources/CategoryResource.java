@@ -51,63 +51,63 @@ public class CategoryResource {
 		}
 		return srvCategoryService.getByProjection(CategoryDTO.class);
 	}
-//	
-//	@GetMapping(params = "page")
-//	public Page<ActorShort> getAll(Pageable pageable) {
-//		return srv.getByProjection(pageable, ActorShort.class);
-//	}
-//
-//	@GetMapping(path = "/{id}")
-//	public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
-//		var item = srv.getOne(id);
-//		if(item.isEmpty())
-//			throw new NotFoundException();
-//		return ActorDTO.from(item.get());
-//	}
-//	
-//	@GetMapping(path = "/{id}/pelis")
-//	@Transactional
-//	public List<ElementoDTO<Integer, String>> getPelis(@PathVariable int id) throws NotFoundException {
-//		var item = srv.getOne(id);
-//		if(item.isEmpty())
-//			throw new NotFoundException();
-//		return item.get().getFilms().stream().map(o -> new ElementoDTO<>(
-//				o.getFilmId(), 
-//				o.getTitle()))
-//				.toList();
-//	}
-//	
-//	//POST
-//	
-//	@PostMapping
-//	public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
-//		var newItem = srv.add(ActorDTO.from(item));
-//		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-//			.buildAndExpand(newItem.getActorId()).toUri();
-//		return ResponseEntity.created(location).build();
-//
-//	}
-//	
-//	//PUT
-//	
-//	@PutMapping("/{id}")
-//	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-//		if(id != item.getActorId())
-//			throw new BadRequestException("No coinciden los identificadores");
-//		srv.modify(ActorDTO.from(item));
-//	}
-//	
-//	//DELETE
-//	
-//	@DeleteMapping("/{id}")
-//	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	public void delete(@PathVariable int id) {
-//		srv.deleteById(id);
-//	}
-//	
-//	
-//	
+	
+	@GetMapping(params = "page")
+	public Page<CategoryDTO> getAll(Pageable pageable) {
+		return srvCategoryService.getByProjection(pageable, CategoryDTO.class);
+	}
+
+	@GetMapping(path = "/{id}")
+	public CategoryDTO getOne(@PathVariable int id) throws NotFoundException {
+		var item = srvCategoryService.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		return CategoryDTO.from(item.get());
+	}
+	
+	@GetMapping(path = "/{id}/pelis")
+	@Transactional
+	public List<ElementoDTO<Integer, String>> getPelis(@PathVariable int id) throws NotFoundException {
+		var item = srvCategoryService.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		return item.get().getFilms().stream().map(o -> new ElementoDTO<>(
+				o.getFilmId(), 
+				o.getTitle()))
+				.toList();
+	}
+	
+	//POST
+	
+	@PostMapping
+	public ResponseEntity<Object> create(@Valid @RequestBody CategoryDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		var newItem = srvCategoryService.add(CategoryDTO.from(item));
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+			.buildAndExpand(newItem.getCategoryId()).toUri();
+		return ResponseEntity.created(location).build();
+
+	}
+	
+	//PUT
+	
+	@PutMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void update(@PathVariable int id, @Valid @RequestBody CategoryDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
+		if(id != item.getCategoryId())
+			throw new BadRequestException("No coinciden los identificadores");
+		srvCategoryService.modify(CategoryDTO.from(item));
+	}
+	
+	//DELETE
+	
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable int id) {
+		srvCategoryService.deleteById(id);
+	}
+	
+	
+	
 
 
 
