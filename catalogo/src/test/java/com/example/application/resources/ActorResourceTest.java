@@ -145,13 +145,13 @@ class ActorResourceTest {
 	}
 	
 	@Test
-	void testGetFilmList() throws Exception {
+	void testGetPelis() throws Exception {
 		int id = 1;
 		Actor actor = new Actor(id, "Pepito", "Grillo");
 		List<Film> peliculas = new ArrayList<Film>();
-		peliculas.add(new Film(1, "Titulo 1"));
-		peliculas.add(new Film(2, "Titulo 2"));
-		peliculas.add(new Film(3, "Titulo 3"));
+		peliculas.add(new Film(1, "Pelicula 1"));
+		peliculas.add(new Film(2, "Pelicula 2"));
+		peliculas.add(new Film(3, "Pelicula 3"));
 		actor.setFilms(peliculas);
 		when(srv.getOne(id)).thenReturn(Optional.of(actor));
 		

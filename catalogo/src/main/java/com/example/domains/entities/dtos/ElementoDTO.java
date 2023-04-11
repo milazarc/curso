@@ -1,5 +1,7 @@
 package com.example.domains.entities.dtos;
 
+import com.example.domains.entities.Actor;
+
 import lombok.Value;
 
 @Value
