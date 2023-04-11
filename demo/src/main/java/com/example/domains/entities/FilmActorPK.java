@@ -1,9 +1,6 @@
 package com.example.domains.entities;
 
 import java.io.Serializable;
-
-import com.example.domains.core.entities.EntityBase;
-
 import jakarta.persistence.*;
 
 /**
@@ -11,7 +8,7 @@ import jakarta.persistence.*;
  * 
  */
 @Embeddable
-public class FilmActorPK extends EntityBase<FilmActorPK> implements Serializable {
+public class FilmActorPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -23,15 +20,6 @@ public class FilmActorPK extends EntityBase<FilmActorPK> implements Serializable
 
 	public FilmActorPK() {
 	}
-	
-	
-	public FilmActorPK( int filmId, int actorId) {
-		super();
-		setActorId(actorId);
-		setFilmId(filmId);
-	}
-
-
 	public int getActorId() {
 		return this.actorId;
 	}

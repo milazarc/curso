@@ -1,16 +1,14 @@
 package com.example.application.resources;
+
 import java.net.URI;
 import java.util.List;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
-import org.hibernate.boot.jaxb.hbm.spi.JaxbHbmNativeQueryCollectionLoadReturnType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jmx.export.assembler.InterfaceBasedMBeanInfoAssembler;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,9 +43,8 @@ public class ActorResource {
 
 	@GetMapping
 	public List<ActorShort> getAll(@RequestParam(required = false) String sort) {
-		if(sort != null) {
+		if(sort != null)
 			return (List<ActorShort>)srv.getByProjection(Sort.by(sort), ActorShort.class);
-		}
 		return srv.getByProjection(ActorShort.class);
 	}
 	
@@ -70,12 +67,10 @@ public class ActorResource {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return item.get().getFilmActors().stream().map(o -> new ElementoDTO<>(
-				o.getFilm().getFilmId(), 
-				o.getFilm().getTitle()))
+		return item.get().getFilmActors().stream()
+				.map(o -> new ElementoDTO<>(o.getFilm().getFilmId(), o.getFilm().getTitle()))
 				.toList();
 	}
-	
 	
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {

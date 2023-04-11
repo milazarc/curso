@@ -4,13 +4,17 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 
-import com.example.domains.core.contracts.repositories.RepositoryWithProjections;
-import com.example.domains.entities.Category;
-import com.example.domains.entities.Film;
 import com.example.domains.entities.Language;
 
-public interface LanguageRepository extends JpaRepository<Language, Integer>, JpaSpecificationExecutor<Language>, RepositoryWithProjections {
+@RepositoryRestResource(path="idiomas", itemResourceRel="idioma", collectionResourceRel="idiomas")
+public interface LanguageRepository extends JpaRepository<Language, Integer> {
+	@RestResource(path = "novedades")
 	List<Language> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
+
+	@RestResource(exported = false)
+	@Override
+	void deleteById(Integer id);
 }

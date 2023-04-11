@@ -3,11 +3,7 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import com.example.domains.core.entities.EntityBase;
 
 
 /**
@@ -17,7 +13,7 @@ import com.example.domains.core.entities.EntityBase;
 @Entity
 @Table(name="language")
 @NamedQuery(name="Language.findAll", query="SELECT l FROM Language l")
-public class Language extends EntityBase<Language> implements Serializable {
+public class Language implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,24 +29,13 @@ public class Language extends EntityBase<Language> implements Serializable {
 
 	//bi-directional many-to-one association to Film
 	@OneToMany(mappedBy="language")
-	private List<Film> films = new ArrayList<Film>();
+	private List<Film> films;
 
 	//bi-directional many-to-one association to Film
 	@OneToMany(mappedBy="languageVO")
-	private List<Film> filmsVO = new ArrayList<Film>();
+	private List<Film> filmsVO;
 
 	public Language() {
-	}
-
-	public Language(int languageId) {
-		super();
-		this.languageId = languageId;
-	}
-
-	public Language(int languageId, String name) {
-		super();
-		this.languageId = languageId;
-		this.name = name;
 	}
 
 	public int getLanguageId() {
@@ -84,21 +69,19 @@ public class Language extends EntityBase<Language> implements Serializable {
 	public void setFilms(List<Film> films) {
 		this.films = films;
 	}
-	
-	public void clearFilms() {
-		films = new ArrayList<Film>() ;
-	}
-	
-	public void clearFilmsVO() {
-		filmsVO = new ArrayList<Film>() ;
-	}
 
-	public void addFilm(Film film) {
+	public Film addFilm(Film film) {
 		getFilms().add(film);
+		film.setLanguage(this);
+
+		return film;
 	}
 
-	public void removeFilm(Film film) {
+	public Film removeFilm(Film film) {
 		getFilms().remove(film);
+		film.setLanguage(null);
+
+		return film;
 	}
 
 	public List<Film> getFilmsVO() {
@@ -109,59 +92,18 @@ public class Language extends EntityBase<Language> implements Serializable {
 		this.filmsVO = filmsVO;
 	}
 
-	public void addFilmVO(Film filmsVO) {
+	public Film addFilmsVO(Film filmsVO) {
 		getFilmsVO().add(filmsVO);
+		filmsVO.setLanguageVO(this);
+
+		return filmsVO;
 	}
 
-	public void removeFilmVO(Film filmsVO) {
+	public Film removeFilmsVO(Film filmsVO) {
 		getFilmsVO().remove(filmsVO);
-	}
-	
-	public Language merge(Language target) {
-		target.languageId = languageId;
-		target.name = name;
-	
-		// Borra las peliculas que sobran
-		target.getFilms().stream()
-			.filter(item -> !getFilms().contains(item))
-			.forEach(item -> target.removeFilm(item));
-		// Añade las peliculas que faltan
-		getFilms().stream()
-			.filter(item -> !target.getFilms().contains(item))
-			.forEach(item -> target.addFilm(item));
-		// Borra las peliculasVO que sobran
-		target.getFilmsVO().stream()
-			.filter(item -> !getFilmsVO().contains(item))
-			.forEach(item -> target.removeFilmVO(item));
-		// Añade las peliculasVO que faltan
-		getFilmsVO().stream()
-			.filter(item -> !target.getFilmsVO().contains(item))
-			.forEach(item -> target.addFilmVO(item));
-		return target;
-	}
+		filmsVO.setLanguageVO(null);
 
-	@Override
-	public String toString() {
-		return "Language [languageId=" + languageId + ", lastUpdate=" + lastUpdate + ", name=" + name + "]";
+		return filmsVO;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(languageId);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Language other = (Language) obj;
-		return languageId == other.languageId;
-	}
-	
-	
 
 }

@@ -137,11 +137,8 @@ public class ApiExceptionHandler {
 		return ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler({ 
-		BadRequestException.class, 
-		DuplicateKeyException.class, 
-		HttpMessageNotReadableException.class, 
-		MethodArgumentTypeMismatchException.class })
+	@ExceptionHandler({ BadRequestException.class, DuplicateKeyException.class, HttpMessageNotReadableException.class,
+		MethodArgumentTypeMismatchException.class})
 	public ProblemDetail badRequest(Exception exception) {
 		return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
 	}

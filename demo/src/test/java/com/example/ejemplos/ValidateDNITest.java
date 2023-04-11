@@ -15,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import com.example.core.test.SpaceCamelCase;
-import com.example.domain.core.validations.CadenasValidator;
+import com.example.domains.core.validations.CadenasValidator;
 
 public class ValidateDNITest {
 	
