@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.CategoryRepository;
@@ -21,6 +23,31 @@ import jakarta.transaction.Transactional;
 public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	private CategoryRepository dao;
+	
+	@Override
+	public <T> List<T> getByProjection(Class<T> type) {
+		return dao.findAllBy(type);
+	}
+
+	@Override
+	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
+		return dao.findAllBy(sort, type);
+	}
+
+	@Override
+	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
+		return dao.findAllBy(pageable, type);
+	}
+
+	@Override
+	public Iterable<Category> getAll(Sort sort) {
+		return dao.findAll(sort);
+	}
+
+	@Override
+	public Page<Category> getAll(Pageable pageable) {
+		return dao.findAll(pageable);
+	}
 	
 	@Override
 	public List<Category> getAll() {
@@ -84,5 +111,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public 	List<Category> funcionPrueba(){
 		return dao.findAll();	
 	}
+
+
 
 }
