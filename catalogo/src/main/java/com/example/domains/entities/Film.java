@@ -332,6 +332,13 @@ public class Film extends EntityBase<Film> implements Serializable {
 			return;
 		filmActors.remove(filmActor.get());
 	}
+	
+	public void removeActorId(int id) {
+		var filmActor = filmActors.stream().filter(item -> item.getActor().getActorId() == id).findFirst();
+		if(filmActor.isEmpty())
+			return;
+		filmActors.remove(filmActor.get());
+	}
 
 	// Gestión de categorias
 
@@ -354,6 +361,13 @@ public class Film extends EntityBase<Film> implements Serializable {
 	}
 	public void removeCategory(Category ele) {
 		var filmCategory = filmCategories.stream().filter(item -> item.getCategory().equals(ele)).findFirst();
+		if(filmCategory.isEmpty())
+			return;
+		filmCategories.remove(filmCategory.get());
+	}
+	
+	public void removeCategoryId(int id) {
+		var filmCategory = filmCategories.stream().filter(item -> item.getCategory().getCategoryId() == id).findFirst();
 		if(filmCategory.isEmpty())
 			return;
 		filmCategories.remove(filmCategory.get());

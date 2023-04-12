@@ -10,7 +10,7 @@ public class FilmDto {
 	
 	@JsonProperty("id")
 	private int filmId;
-	@JsonProperty("titulo")
+	@JsonProperty("title")
 	private String title;
 	
 	public static FilmDto from(Film source) {

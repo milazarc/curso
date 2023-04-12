@@ -22,11 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.FilmService;
-import com.example.domains.contracts.services.LanguageService;
-import com.example.domains.entities.Language;
-import com.example.domains.entities.dtos.ActorDTO;
-import com.example.domains.entities.dtos.CategoryDTO;
+import com.example.domains.entities.Film;
 import com.example.domains.entities.dtos.ElementoDTO;
+import com.example.domains.entities.dtos.FilmDetailsDTO;
 import com.example.domains.entities.dtos.FilmDto;
 import com.example.domains.entities.dtos.LanguageDTO;
 import com.example.exceptions.BadRequestException;
@@ -43,7 +41,6 @@ import jakarta.validation.Valid;
 public class FilmResource {
 	@Autowired
 	FilmService srvFilmService;
-	
 	
 	//GET
 	
@@ -66,6 +63,14 @@ public class FilmResource {
 		if(item.isEmpty())
 			throw new NotFoundException();
 		return FilmDto.from(item.get());
+	}
+	
+	@GetMapping(path = "/complete/{id}")
+	public FilmDetailsDTO getOneComplete(@PathVariable int id) throws NotFoundException {
+		var item = srvFilmService.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		return FilmDetailsDTO.from(item.get());
 	}
 	
 	@GetMapping(path = "/{id}/actores")
@@ -92,83 +97,24 @@ public class FilmResource {
 				.toList();
 	}	
 	
-	@GetMapping(path = "/{id}/idioma")
-	@Transactional
-	public LanguageDTO getIdioma(@PathVariable int id) throws NotFoundException {
-		var item = srvFilmService.getOne(id);
-		if(item.isEmpty())
-			throw new NotFoundException();
-		return LanguageDTO.from(item.get().getLanguage());
-	}
-	
-	@GetMapping(path = "/{id}/idiomaVO")
-	@Transactional
-	public LanguageDTO getIdiomaVO(@PathVariable int id) throws NotFoundException {
-		var item = srvFilmService.getOne(id);
-		if(item.isEmpty())
-			throw new NotFoundException();
-		return LanguageDTO.from(item.get().getLanguageVO());
-	}
-	
 	//POST
 	
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody FilmDto item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
-		var newItem = srvFilmService.add(FilmDto.from(item));
+	public ResponseEntity<Object> create(@Valid @RequestBody Film item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		var newItem = srvFilmService.add(item);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 			.buildAndExpand(newItem.getFilmId()).toUri();
 		return ResponseEntity.created(location).build();
-
 	}
 	
 	//PUT
 	
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody FilmDto item) throws BadRequestException, NotFoundException, InvalidDataException {
+	public void update(@PathVariable int id, @Valid @RequestBody Film item) throws BadRequestException, NotFoundException, InvalidDataException {
 		if(id != item.getFilmId())
 			throw new BadRequestException("No coinciden los identificadores");
-		srvFilmService.modify(FilmDto.from(item));
-	}
-	
-	@PutMapping("/{id}/idioma")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updateIdioma(@PathVariable int id, @Valid @RequestBody LanguageDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		var newItem = srvFilmService.getOne(id);
-		if(newItem.isEmpty())
-			throw new NotFoundException();
-		newItem.get().setLanguage(LanguageDTO.from(item));
-		srvFilmService.modify(newItem.get());
-	}
-	
-	@PutMapping("/{id}/idiomaVO")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updateIdiomaVO(@PathVariable int id, @Valid @RequestBody LanguageDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		var newItem = srvFilmService.getOne(id);
-		if(newItem.isEmpty())
-			throw new NotFoundException();
-		newItem.get().setLanguage(LanguageDTO.from(item));
-		srvFilmService.modify(newItem.get());
-	}
-	
-	@PutMapping("/{id}/categoria")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void addCategoria(@PathVariable int id, @Valid @RequestBody CategoryDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		var newItem = srvFilmService.getOne(id);
-		if(newItem.isEmpty())
-			throw new NotFoundException();
-		newItem.get().addCategory(CategoryDTO.from(item));
-		srvFilmService.modify(newItem.get());
-	}
-	
-	@PutMapping("/{id}/actor")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void addActor(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		var newItem = srvFilmService.getOne(id);
-		if(newItem.isEmpty())
-			throw new NotFoundException();
-		newItem.get().addActor(ActorDTO.from(item));
-		srvFilmService.modify(newItem.get());
+		srvFilmService.modify(item);
 	}
 	
 	//DELETE
@@ -181,14 +127,20 @@ public class FilmResource {
 	
 	@DeleteMapping("/{id}/categoria/{categoryId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteCategoria(@PathVariable int id, @PathVariable int categoryId) {
-		srvFilmService.deleteById(id);
+	public void deleteCategoria(@PathVariable int id, @PathVariable int categoryId) throws NotFoundException {
+		var item = srvFilmService.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		item.get().removeCategoryId(categoryId);
 	}
 	
 	@DeleteMapping("/{id}/actor/{actorId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteActor(@PathVariable int id, @PathVariable int actorId) {
-		srvFilmService.deleteById(id);
+	public void deleteActor(@PathVariable int id, @PathVariable int actorId) throws NotFoundException {
+		var item = srvFilmService.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		item.get().removeActorId(actorId);
 	}
 	
 	
