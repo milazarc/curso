@@ -10,7 +10,15 @@ Calculadora
 
     - Clase realizada para demostrar el uso de testing
 
-Package example.ioc
+Catalogo
 
-    - Package que contiene varias clases para demonstrar el uso de injeccion de dependencias
+    - Proyecto para el uso de spring data sobre una base de datos y mas testing
+
+Demo
+
+    - Proyecto de uso general para los varios ejemplos realizado en clase
+
+Gateway & Eukera
+
+    - Proyectos del servidor de eureka para el uso del balanceador y monitorizacion
 
