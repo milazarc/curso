@@ -26,6 +26,7 @@ import com.example.domains.entities.Film;
 import com.example.domains.entities.dtos.ElementoDTO;
 import com.example.domains.entities.dtos.FilmDetailsDTO;
 import com.example.domains.entities.dtos.FilmDto;
+import com.example.domains.entities.dtos.FilmEditDTO;
 import com.example.domains.entities.dtos.LanguageDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
@@ -100,8 +101,8 @@ public class FilmResource {
 	//POST
 	
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody Film item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
-		var newItem = srvFilmService.add(item);
+	public ResponseEntity<Object> create(@Valid @RequestBody FilmEditDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		var newItem = srvFilmService.add(FilmEditDTO.from(item));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 			.buildAndExpand(newItem.getFilmId()).toUri();
 		return ResponseEntity.created(location).build();
@@ -111,10 +112,10 @@ public class FilmResource {
 	
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody Film item) throws BadRequestException, NotFoundException, InvalidDataException {
+	public void update(@PathVariable int id, @Valid @RequestBody FilmEditDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
 		if(id != item.getFilmId())
 			throw new BadRequestException("No coinciden los identificadores");
-		srvFilmService.modify(item);
+		srvFilmService.modify(FilmEditDTO.from(item));
 	}
 	
 	//DELETE
@@ -127,20 +128,22 @@ public class FilmResource {
 	
 	@DeleteMapping("/{id}/categoria/{categoryId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteCategoria(@PathVariable int id, @PathVariable int categoryId) throws NotFoundException {
+	public void deleteCategoria(@PathVariable int id, @PathVariable int categoryId) throws NotFoundException, InvalidDataException {
 		var item = srvFilmService.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
 		item.get().removeCategoryId(categoryId);
+		srvFilmService.modify(item.get());
 	}
 	
 	@DeleteMapping("/{id}/actor/{actorId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteActor(@PathVariable int id, @PathVariable int actorId) throws NotFoundException {
+	public void deleteActor(@PathVariable int id, @PathVariable int actorId) throws NotFoundException, InvalidDataException {
 		var item = srvFilmService.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
 		item.get().removeActorId(actorId);
+		srvFilmService.modify(item.get());
 	}
 	
 	
