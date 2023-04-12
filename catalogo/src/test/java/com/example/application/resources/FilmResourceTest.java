@@ -301,7 +301,6 @@ class FilmResourceTest {
 	@Nested
 	class Negative{
 		
-		@Disabled
 		@Test
 		void testGetOne404() throws Exception {
 			int id = 1;
