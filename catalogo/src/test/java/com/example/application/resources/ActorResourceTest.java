@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.example.core.SpaceCamelCase;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
@@ -164,10 +165,30 @@ class ActorResourceTest {
 			        .andDo(print());
 		}
 		
+		@Test
+		void testDelete() throws Exception {
+			int id = 1;
+			var ele = new Actor(id, "Pepito", "Grillo");
+			srv.add(ele);
+			mockMvc.perform(delete("/api/actores/v1/{id}", 1))
+					.andExpect(status().isNoContent())
+			        .andDo(print());
+		}
+		
 	}
 	
 	@Nested
 	class Negative{
+		
+		@Test
+		void testGetPelisFail() throws Exception {
+			int id = 1;
+
+			mockMvc.perform(get("/api/actores/v1/{id}/pelis", id))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
 		
 		@Test
 		void testGetOne404() throws Exception {

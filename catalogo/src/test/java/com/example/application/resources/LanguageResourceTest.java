@@ -199,6 +199,26 @@ class LanguageResourceTest {
 	class Negative{
 		
 		@Test
+		void testGetPelisFail() throws Exception {
+			int id = 1;
+			
+			mockMvc.perform(get("/api/idiomas/v1/{id}/pelis", id))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
+		@Test
+		void testGetPelisVoFail() throws Exception {
+			int id = 1;
+			
+			mockMvc.perform(get("/api/idiomas/v1/{id}/pelisVO", id))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
+		@Test
 		void testGetOne404() throws Exception {
 			int id = 1;
 			var ele = new Language(1, "Lengua 1");
