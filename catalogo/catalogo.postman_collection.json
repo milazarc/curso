@@ -1,0 +1,1472 @@
+{
+	"info": {
+		"_postman_id": "0684eea7-d9f1-4d20-a31d-28a6550f45a0",
+		"name": "catalogo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26770929"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "OK",
+					"item": [
+						{
+							"name": "All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 10 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1?page=0&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 2 with 10 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1?page=1&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/17",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"17"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Movies with category",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/1/pelis",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"1",
+										"pelis"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 18,\r\n    \"nombre\": \"TEST CATEGORY\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 17,\r\n    \"nombre\": \"TEST CATEGORY 2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/17",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"17"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete one",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/17",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"17"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "KO",
+					"item": [
+						{
+							"name": "One Fail not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/200",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"200"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Category Fail Data does not coincide",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 20,\r\n    \"nombre\": \"TEST CATEGORY 2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/18",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"18"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Category Fail content",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 18,\r\n    \"nombre\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/18",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"18"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete erroneo",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/17fsd",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"17fsd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One invalid id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/categorias/v1/17asda",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"categorias",
+										"v1",
+										"17asda"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Language",
+			"item": [
+				{
+					"name": "OK",
+					"item": [
+						{
+							"name": "All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 3 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1?page=0&size=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 2 with 3 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1?page=1&size=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Movies with language",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/1/pelis",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"1",
+										"pelis"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create language",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"nombre\": \"Latin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify language",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 7,\r\n    \"nombre\": \"Greek\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete one",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"8"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "KO",
+					"item": [
+						{
+							"name": "One Fail not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/200",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"200"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Language Fail Data does not coincide",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 20,\r\n    \"nombre\": \"TEST language 2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/18",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"18"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Language Fail content",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":9,\r\n    \"nombre\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete erroneo",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/17fsd",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"17fsd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One invalid id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/idiomas/v1/17asda",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"idiomas",
+										"v1",
+										"17asda"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Actor",
+			"item": [
+				{
+					"name": "OK",
+					"item": [
+						{
+							"name": "All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 10 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1?page=0&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 2 with 10 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1?page=1&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/201",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actor with movies",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/1/pelis",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"1",
+										"pelis"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create actor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"nombre\": \"nombre\",\r\n    \"apellidos\": \"APELLIDO\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify actor",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 201,\r\n    \"nombre\": \"nombre\",\r\n    \"apellidos\": \"APELLIDOOOOOOO\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/201",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete one",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/202",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"202"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "KO",
+					"item": [
+						{
+							"name": "One Fail not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/400",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"400"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify ActorFail Data does not coincide",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 200,\r\n    \"nombre\": \"nombre\",\r\n    \"apellidos\": \"APELLIDO\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/201",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Actor Fail content",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 201,\r\n    \"nombre\": \"nombre\",\r\n    \"apellidos\": \"a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/201",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete erroneo",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/17fsd",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"17fsd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One invalid id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/actores/v1/17asda",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"actores",
+										"v1",
+										"17asda"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Film",
+			"item": [
+				{
+					"name": "OK",
+					"item": [
+						{
+							"name": "All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 10 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1?page=0&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All page 2 with 10 elements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1?page=1&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/201",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One complete",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/complete/1005",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"complete",
+										"1005"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Movie with actors",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/1/actores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"1",
+										"actores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Movie with categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/1/categorias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"1",
+										"categorias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create film",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"filmId\": 0,\r\n    \"description\": \"Descripcion\",\r\n    \"length\": 80,\r\n    \"rating\": \"G\",\r\n    \"releaseYear\": \"2000\",\r\n    \"rentalDuration\": 4,\r\n    \"rentalRate\": 3,\r\n    \"replacementCost\": 20,\r\n    \"title\": \"Pelicula 1\",\r\n    \"languageId\": 1,\r\n    \"languageVOId\": 2,\r\n    \"actors\": [\r\n        1,\r\n        2,\r\n        3,\r\n        4\r\n    ],\r\n    \"categories\": [\r\n        1,\r\n        2,\r\n        3\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Film",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"filmId\": 1005,\r\n    \"description\": \"Descripcion\",\r\n    \"length\": 80,\r\n    \"rating\": \"G\",\r\n    \"releaseYear\": \"2000\",\r\n    \"rentalDuration\": 4,\r\n    \"rentalRate\": 3,\r\n    \"replacementCost\": 20,\r\n    \"title\": \"Pelicula 1004\",\r\n    \"languageId\": 1,\r\n    \"languageVOId\": 2,\r\n    \"actors\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"categories\": [\r\n        1,\r\n        2,\r\n        3\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/1005",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"1005"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete one",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/1004",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"1004"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "KO",
+					"item": [
+						{
+							"name": "One Fail not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/1200",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"1200"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Film Fail Data does not coincide",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 200,\r\n    \"languageId\": 1,\r\n    \"title\": \"titulo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/201",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Film Fail content",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 201,\r\n    \"languageId\": 1,\r\n    \"title\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/201",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete erroneo",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/17fsd",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"17fsd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "One invalid id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8010/api/peliculas/v1/17asda",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8010",
+									"path": [
+										"api",
+										"peliculas",
+										"v1",
+										"17asda"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

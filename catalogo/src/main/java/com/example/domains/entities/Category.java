@@ -32,7 +32,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	@JsonProperty("id")
 	private int categoryId;
 
-	@Column(name="last_update", insertable = false, updatable = false)
+	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	@PastOrPresent
 	@JsonIgnore
 	private Timestamp lastUpdate;
