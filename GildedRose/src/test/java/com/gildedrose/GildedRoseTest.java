@@ -1,12 +1,10 @@
 package com.gildedrose;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Disabled;
 
 class GildedRoseTest {
 
@@ -21,7 +19,7 @@ class GildedRoseTest {
 	void productAgedBrieTest(int sellIn, int quality, int sellInResult, int qualityResult) {
 		String name = "Aged Brie";
 		Item product = new Item(name, sellIn, quality);
-        GildedRose app = new GildedRose(new Item[] { 
+        GildedRose app = new GildedRose(new Item[] {
         		product
         });
         app.updateQuality();
@@ -31,7 +29,7 @@ class GildedRoseTest {
         		() -> assertEquals(qualityResult, product.quality, "quality")
         		);
 	}
-	
+
 	@ParameterizedTest(name = "SellIn: {0} -> {2}, Quality: {1} -> {3}")
 	@CsvSource({
 		"1, 80, 1, 80",
@@ -41,7 +39,7 @@ class GildedRoseTest {
 	void productSulfurasTest(int sellIn, int quality, int sellInResult, int qualityResult) {
 		String name = "Sulfuras, Hand of Ragnaros";
 		Item product = new Item(name, sellIn, quality);
-        GildedRose app = new GildedRose(new Item[] { 
+        GildedRose app = new GildedRose(new Item[] {
         		product
         });
         app.updateQuality();
@@ -51,7 +49,7 @@ class GildedRoseTest {
         		() -> assertEquals(qualityResult, product.quality, "quality")
         		);
 	}
-	
+
 	@ParameterizedTest(name = "SellIn: {0} -> {2}, Quality: {1} -> {3}")
 	@CsvSource({
 		"11, 0, 10, 1",
@@ -67,7 +65,7 @@ class GildedRoseTest {
 	void productPassesTest(int sellIn, int quality, int sellInResult, int qualityResult) {
 		String name = "Backstage passes to a TAFKAL80ETC concert";
 		Item product = new Item(name, sellIn, quality);
-        GildedRose app = new GildedRose(new Item[] { 
+        GildedRose app = new GildedRose(new Item[] {
         		product
         });
         app.updateQuality();
@@ -78,7 +76,7 @@ class GildedRoseTest {
 //        		() -> assertEquals(qualityResult, product.quality, "quality")
 //        		);
 	}
-	
+
 	@ParameterizedTest(name = "SellIn: {0} -> {2}, Quality: {1} -> {3}")
 	@CsvSource({
 		"11, 10, 10, 9",
@@ -89,7 +87,7 @@ class GildedRoseTest {
 	void otherProductTest(int sellIn, int quality, int sellInResult, int qualityResult) {
 		String name = "Normal Product";
 		Item product = new Item(name, sellIn, quality);
-        GildedRose app = new GildedRose(new Item[] { 
+        GildedRose app = new GildedRose(new Item[] {
         		product
         });
         app.updateQuality();
@@ -110,7 +108,7 @@ class GildedRoseTest {
 	void productConjuredTest(int sellIn, int quality, int sellInResult, int qualityResult) {
 		String name = "Conjured Mana Cake";
 		Item product = new Item(name, sellIn, quality);
-        GildedRose app = new GildedRose(new Item[] { 
+        GildedRose app = new GildedRose(new Item[] {
         		product
         });
         app.updateQuality();
