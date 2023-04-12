@@ -22,12 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.FilmService;
-import com.example.domains.entities.Film;
 import com.example.domains.entities.dtos.ElementoDTO;
 import com.example.domains.entities.dtos.FilmDetailsDTO;
 import com.example.domains.entities.dtos.FilmDto;
 import com.example.domains.entities.dtos.FilmEditDTO;
-import com.example.domains.entities.dtos.LanguageDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;

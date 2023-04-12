@@ -19,7 +19,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
@@ -132,13 +131,53 @@ class FilmResourceTest {
 		@Test
 		void testGetOne() throws Exception {
 			int id = 1;
-			var ele = new Film(1, "Pelicula 1");
+			var ele = new Film(
+					id,
+					"Pelicula 1",
+					"Descripcion",
+					(short) 2000,
+					new Language(1, "Lengua 1"),
+					new Language(2, "Lengua 2"),
+					(byte) 4,
+					new BigDecimal(3.1),
+					80,
+					new BigDecimal(20.5),
+					Rating.GENERAL_AUDIENCES);
+			ele.setActors(listActors);
+			ele.setCategories(listCategories);
 			
 			when(srvFilmService.getOne(id)).thenReturn(Optional.of(ele));
 			mockMvc.perform(get("/api/peliculas/v1/{id}", id))
 				.andExpect(status().isOk())
 		        .andExpect(jsonPath("$.id").value(id))
 		        .andExpect(jsonPath("$.title").value(ele.getTitle()))
+		        .andDo(print());
+		}
+		
+		@Test
+		void testGetOneComplete() throws Exception {
+			int id = 1;
+			var ele = new Film(
+					id,
+					"Pelicula 1",
+					"Descripcion",
+					(short) 2000,
+					new Language(1, "Lengua 1"),
+					new Language(2, "Lengua 2"),
+					(byte) 4,
+					new BigDecimal(3.1),
+					80,
+					new BigDecimal(20.5),
+					Rating.GENERAL_AUDIENCES);
+			ele.setActors(listActors);
+			ele.setCategories(listCategories);
+			
+			when(srvFilmService.getOne(id)).thenReturn(Optional.of(ele));
+			mockMvc.perform(get("/api/peliculas/v1/complete/{id}", id))
+				.andExpect(status().isOk())
+		        .andExpect(jsonPath("$.filmId").value(id))
+		        .andExpect(jsonPath("$.title").value(ele.getTitle()))
+		        .andExpect(jsonPath("$.description").value(ele.getDescription()))
 		        .andDo(print());
 		}
 
@@ -366,5 +405,72 @@ class FilmResourceTest {
 					.andExpect(status().isBadRequest())
 			        .andDo(print());
 		}
+		
+		@Test
+		void testGetOneFail() throws Exception {
+			int id = 1;
+			
+			when(srvFilmService.getOne(id)).thenReturn(Optional.empty());
+			mockMvc.perform(get("/api/peliculas/v1/{id}", id))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
+		@Test
+		void testGetOneCompleteFail() throws Exception {
+			int id = 1;
+			
+			when(srvFilmService.getOne(id)).thenReturn(Optional.empty());
+			mockMvc.perform(get("/api/peliculas/v1/complete/{id}", id))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
+		@Test
+		void testDeleteCategoriaFail() throws Exception {
+			int id = 1;
+
+			when(srvFilmService.getOne(id)).thenReturn(Optional.empty());
+			mockMvc.perform(delete("/api/peliculas/v1/{id}/categoria/1", 1))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
+		@Test
+		void testDeleteActoresFail() throws Exception {
+			int id = 1;
+
+			when(srvFilmService.getOne(id)).thenReturn(Optional.empty());
+			mockMvc.perform(delete("/api/peliculas/v1/{id}/actor/1", 1))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
+		@Test
+		void testGetActorsFail() throws Exception {
+			int id = 1;
+			when(srvFilmService.getOne(id)).thenReturn(Optional.empty());
+			
+			mockMvc.perform(get("/api/peliculas/v1/{id}/actores", id))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
+		@Test
+		void testGetCategoriesFail() throws Exception {
+			int id = 1;
+			when(srvFilmService.getOne(id)).thenReturn(Optional.empty());
+			
+			mockMvc.perform(get("/api/peliculas/v1/{id}/categorias", id))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.title").value("Not Found"))
+		        .andDo(print());
+		}
+		
 	}
 }
