@@ -58,6 +58,7 @@
               </table>
         </div>
     </main>
+    <script type="text/javascript" src="calculadora.js"></script>
     <script>
         (function(){
 
@@ -102,63 +103,6 @@
         })();
     </script>
 
-    <!-- <script>
-        (function () {
-            let result = document.querySelector('output')
-            if(localStorage && localStorage.result) {
-                    result.textContent = localStorage.result
-                    result.textContent = localStorage.getItem('result')
-                }
-            let btn = document.querySelector('input[type=button]')
-            let suma = ev => {
-                //result.textContent = +document.querySelector('#op1').value + +document.getElementById('op2').value
-                result.innerHTML = `<b>${+document.querySelector('#op1').value + +document.getElementById('op2').value}</b>` 
-                //btn.removeEventListener('click', suma)
-                //document.querySelector('span').hidden = !document.querySelector('span').hidden
-                if(localStorage) {
-                    localStorage.result = +document.querySelector('#op1').value + +document.getElementById('op2').value
-                }
-            }
-            localStorage.kk = JSON.stringify({ id: 1, nombre: 'kk'})
-            btn.addEventListener('click', suma)
-            btn.addEventListener('click', ev => {
-                console.log('Botón pulsado')
-            })
-            document.querySelector('span').addEventListener('dblclick', suma)
-            let cad = ''
-            for(let i = 0; i < 10; i++) {
-                cad += `<li>Elemento ${i + 1}</li>`
-            }
-            document.querySelector('#lista').innerHTML = cad
-        })();
-    </script> 
-    <script src="demo.js"></script>
-    <script src="otro.js"></script>
-    <script>
-        // let x = "En la pagina"
-        // console.log('Hola mundo')
-        // usaKK();
-        // // usaKK = 4;
-        // console.log(usaKK)
-        // (function() {
-        //     for(let i=0; i < 10; i++) {
-        //         // ...
-        //     }
-        // })()
-   </script>
-   <script type="module">
-        import * as m1 from './modulos/modulo1.js'
-        import {nombre, calc, display } from './modulos/modulo2.js'
-        import {nombre as nombre2} from './modulos/modulo1.js'
-        // import {display} from './modulos/index.js'
-
-        console.log(m1.nombre, m1.calc(2, 2))
-        console.log(nombre, calc(2,2))
-        display();
-        m1.setNombre('Soy el principal')
-        console.log(nombre, nombre2)
-
-   </script> -->
 </body>
 
 </html>
