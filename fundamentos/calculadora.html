@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos del curso</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+
+<body>
+    <main class="container-fluid">
+        <h1 class="bg-danger"><b>Calculadora</b></h1>
+        <div>
+            <table class="default">
+                <tr>
+                    <td colspan="4"> <input class="" type="text" id="operation" disabled /> </td>
+                </tr>
+                <tr>
+                    <td colspan="4"> <input class="" type="text" id="result" disabled /> </td>
+                </tr>
+                <tr>
+                  <td> <input id="" class="btn btn-outline-dark btn-lg" type="button" value="%" /> </td>
+                  <td> <input id="" class="btn btn-outline-danger btn-lg" type="button" value="CE" /> </td>
+                  <td> <input id="" class="btn btn-outline-danger btn-lg" type="button" value="C" /> </td>
+                  <td> <input id="" class="btn btn-outline-danger btn-lg" type="button" value="<=" /> </td>
+                </tr>
+                <tr>
+                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="1/x" /> </td>
+                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="x^2" /> </td>
+                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="Sqrt(x)" /> </td>
+                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="/" /> </td>
+                  </tr>
+                <tr>
+                    <td> <input id="bt7" class="btn btn-outline-dark btn-lg" type="button" value="7" /> </td>
+                    <td> <input id="bt8" class="btn btn-outline-dark btn-lg" type="button" value="8" /> </td>
+                    <td> <input id="bt9" class="btn btn-outline-dark btn-lg" type="button" value="9" /> </td>
+                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="X" /> </td>
+                </tr>
+                <tr>
+                    <td> <input id="bt4" class="btn btn-outline-dark btn-lg" type="button" value="4" /> </td>
+                    <td> <input id="bt5" class="btn btn-outline-dark btn-lg" type="button" value="5" /> </td>
+                    <td> <input id="bt6" class="btn btn-outline-dark btn-lg" type="button" value="6" /> </td>
+                    <td> <input id="" class= "btn btn-outline-primary btn-lg" type="button" value="-" /> </td>
+                </tr>
+                <tr>
+                    <td> <input id="bt1" class="btn btn-outline-dark btn-lg" type="button" value="1" /> </td>
+                    <td> <input id="bt2" class="btn btn-outline-dark btn-lg" type="button" value="2" /> </td>
+                    <td> <input id="bt3" class="btn btn-outline-dark btn-lg" type="button" value="3" /> </td>
+                    <td> <input id="btnSum" class= "btn btn-outline-primary btn-lg" type="button" value="+" /> </td>
+                </tr>
+                <tr>
+                    <td> <input id="" class= "btn btn-outline-primary btn-lg" type="button" value="+/-" /> </td>
+                    <td> <input id="bt0" class="btn btn-outline-dark btn-lg" type="button" value="0" /> </td>
+                    <td> <input id="" class="btn btn-outline-dark btn-lg" type="button" value="." /> </td>
+                    <td> <input id="btnCalculate" class="btn btn-outline-success btn-lg" type="button" value="=" /> </td>
+                </tr>
+              </table>
+        </div>
+    </main>
+    <script>
+        (function(){
+
+            let acum = 0
+            let number = ''
+            let operation = '+'
+
+            let clickNumber = ev =>{
+                let number = ev.target.value
+                console.log(number)
+                if(localStorage.selected=='first'){
+                    localStorage.first+=number
+                    console.log(localStorage.first)
+                }else{
+                    localStorage.second+=number
+                    console.log(localStorage.second)
+                }
+                // console.log(ev, "mensaje", ev.target, ev.target.value)
+            }
+            
+            let clickOperation = ev =>{
+                let operations = ev.target.value
+                console.log(operations)
+            }
+
+            let clickCalculate = ev =>{
+                console.log("calculate")
+            }
+
+            let btnSum = document.querySelector('#btnSum')
+            btnSum.addEventListener('click', clickOperation);
+            let btnCalculate = document.querySelector('#btnCalculate')
+            btnCalculate.addEventListener('click', clickCalculate);
+            let buttons = []
+
+            for(let i = 0; i <= 9; i++) {
+                buttons[i] = document.querySelector(`#bt${i}`)
+                buttons[i].addEventListener('click', clickNumber);
+            }
+
+
+        })();
+    </script>
+
+    <!-- <script>
+        (function () {
+            let result = document.querySelector('output')
+            if(localStorage && localStorage.result) {
+                    result.textContent = localStorage.result
+                    result.textContent = localStorage.getItem('result')
+                }
+            let btn = document.querySelector('input[type=button]')
+            let suma = ev => {
+                //result.textContent = +document.querySelector('#op1').value + +document.getElementById('op2').value
+                result.innerHTML = `<b>${+document.querySelector('#op1').value + +document.getElementById('op2').value}</b>` 
+                //btn.removeEventListener('click', suma)
+                //document.querySelector('span').hidden = !document.querySelector('span').hidden
+                if(localStorage) {
+                    localStorage.result = +document.querySelector('#op1').value + +document.getElementById('op2').value
+                }
+            }
+            localStorage.kk = JSON.stringify({ id: 1, nombre: 'kk'})
+            btn.addEventListener('click', suma)
+            btn.addEventListener('click', ev => {
+                console.log('Botón pulsado')
+            })
+            document.querySelector('span').addEventListener('dblclick', suma)
+            let cad = ''
+            for(let i = 0; i < 10; i++) {
+                cad += `<li>Elemento ${i + 1}</li>`
+            }
+            document.querySelector('#lista').innerHTML = cad
+        })();
+    </script> 
+    <script src="demo.js"></script>
+    <script src="otro.js"></script>
+    <script>
+        // let x = "En la pagina"
+        // console.log('Hola mundo')
+        // usaKK();
+        // // usaKK = 4;
+        // console.log(usaKK)
+        // (function() {
+        //     for(let i=0; i < 10; i++) {
+        //         // ...
+        //     }
+        // })()
+   </script>
+   <script type="module">
+        import * as m1 from './modulos/modulo1.js'
+        import {nombre, calc, display } from './modulos/modulo2.js'
+        import {nombre as nombre2} from './modulos/modulo1.js'
+        // import {display} from './modulos/index.js'
+
+        console.log(m1.nombre, m1.calc(2, 2))
+        console.log(nombre, calc(2,2))
+        display();
+        m1.setNombre('Soy el principal')
+        console.log(nombre, nombre2)
+
+   </script> -->
+</body>
+
+</html>
