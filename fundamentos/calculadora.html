@@ -9,97 +9,68 @@
 </head>
 
 <body>
-    <main class="container-fluid">
-        <h1 class="bg-danger"><b>Calculadora</b></h1>
-        <div>
-            <table class="default">
-                <tr>
-                    <td colspan="4"> <input class="" type="text" id="operation" disabled /> </td>
-                </tr>
-                <tr>
-                    <td colspan="4"> <input class="" type="text" id="result" disabled /> </td>
-                </tr>
-                <tr>
-                  <td> <input id="" class="btn btn-outline-dark btn-lg" type="button" value="%" /> </td>
-                  <td> <input id="" class="btn btn-outline-danger btn-lg" type="button" value="CE" /> </td>
-                  <td> <input id="" class="btn btn-outline-danger btn-lg" type="button" value="C" /> </td>
-                  <td> <input id="" class="btn btn-outline-danger btn-lg" type="button" value="<=" /> </td>
-                </tr>
-                <tr>
-                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="1/x" /> </td>
-                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="x^2" /> </td>
-                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="Sqrt(x)" /> </td>
-                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="/" /> </td>
-                  </tr>
-                <tr>
-                    <td> <input id="bt7" class="btn btn-outline-dark btn-lg" type="button" value="7" /> </td>
-                    <td> <input id="bt8" class="btn btn-outline-dark btn-lg" type="button" value="8" /> </td>
-                    <td> <input id="bt9" class="btn btn-outline-dark btn-lg" type="button" value="9" /> </td>
-                    <td> <input id="" class="btn btn-outline-primary btn-lg" type="button" value="X" /> </td>
-                </tr>
-                <tr>
-                    <td> <input id="bt4" class="btn btn-outline-dark btn-lg" type="button" value="4" /> </td>
-                    <td> <input id="bt5" class="btn btn-outline-dark btn-lg" type="button" value="5" /> </td>
-                    <td> <input id="bt6" class="btn btn-outline-dark btn-lg" type="button" value="6" /> </td>
-                    <td> <input id="" class= "btn btn-outline-primary btn-lg" type="button" value="-" /> </td>
-                </tr>
-                <tr>
-                    <td> <input id="bt1" class="btn btn-outline-dark btn-lg" type="button" value="1" /> </td>
-                    <td> <input id="bt2" class="btn btn-outline-dark btn-lg" type="button" value="2" /> </td>
-                    <td> <input id="bt3" class="btn btn-outline-dark btn-lg" type="button" value="3" /> </td>
-                    <td> <input id="btnSum" class= "btn btn-outline-primary btn-lg" type="button" value="+" /> </td>
-                </tr>
-                <tr>
-                    <td> <input id="" class= "btn btn-outline-primary btn-lg" type="button" value="+/-" /> </td>
-                    <td> <input id="bt0" class="btn btn-outline-dark btn-lg" type="button" value="0" /> </td>
-                    <td> <input id="" class="btn btn-outline-dark btn-lg" type="button" value="." /> </td>
-                    <td> <input id="btnCalculate" class="btn btn-outline-success btn-lg" type="button" value="=" /> </td>
-                </tr>
-              </table>
+    <main class="container-fluid w-25">
+        <h1 class="text-center"><b>Calculadora</b></h1>
+        <div class="row">
+            <output class="acumulate col btn btn-outline-dark disabled text-end bg-dark text-white border">0</output>
+        </div>
+        <div class="row">
+            <output class="result col btn btn-outline-dark disabled text-end acumulate bg-dark text-white border">0</output>
+        </div>
+        <div class="row">
+            <input type="button" value="CE" class="operation col btn btn-outline-dark" >
+            <input type="button" value="C" class="operation col btn btn-outline-dark">
+            <input type="button" value="<=" class="operation col btn btn-outline-dark">
+            <input type="button" value="/" class="operation col btn btn-outline-dark">
+          </div>
+        <div class="row">
+            <input type="button" value=7 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value=8 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value=9 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value="*" class="operation col btn btn-outline-dark ">
+        </div>
+        <div class="row">
+            <input type="button" value=4 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value=5 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value=6 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value="-" class="operation col btn btn-outline-dark ">
+        </div>
+        <div class="row">
+            <input type="button" value=1 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value=2 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value=3 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value="+" class="operation col btn btn-outline-dark ">
+        </div>
+        <div class="row">
+            <input type="button" value="±" class="operation col btn btn-outline-dark">
+            <input type="button" value=0 class="number col btn btn-outline-primary border-dark">
+            <input type="button" value="," class="operation col btn btn-outline-dark">
+            <input type="button" value="=" class="calculate col btn btn-outline-dark">
         </div>
     </main>
     <script type="text/javascript" src="calculadora.js"></script>
     <script>
         (function(){
+            let calculadora = new Calculadora(1)
+            document.querySelectorAll(".number").forEach(tag => {
+				tag.addEventListener('click', ev => {
+                    calculadora.addDigit(ev.target.value)
+				})
+			})
 
-            let acum = 0
-            let number = ''
-            let operation = '+'
+            document.querySelectorAll(".operation").forEach(tag => {
+				tag.addEventListener('click', ev => {
+                    calculadora.selectOperation(ev.target.value)
+				})
+			})
 
-            let clickNumber = ev =>{
-                let number = ev.target.value
-                console.log(number)
-                if(localStorage.selected=='first'){
-                    localStorage.first+=number
-                    console.log(localStorage.first)
-                }else{
-                    localStorage.second+=number
-                    console.log(localStorage.second)
-                }
-                // console.log(ev, "mensaje", ev.target, ev.target.value)
-            }
-            
-            let clickOperation = ev =>{
-                let operations = ev.target.value
-                console.log(operations)
-            }
+            document.querySelector(".calculate")
+                .addEventListener('click', ev => {
+                    calculadora.selectOperation(ev.target.value)
+                })
 
-            let clickCalculate = ev =>{
-                console.log("calculate")
-            }
-
-            let btnSum = document.querySelector('#btnSum')
-            btnSum.addEventListener('click', clickOperation);
-            let btnCalculate = document.querySelector('#btnCalculate')
-            btnCalculate.addEventListener('click', clickCalculate);
-            let buttons = []
-
-            for(let i = 0; i <= 9; i++) {
-                buttons[i] = document.querySelector(`#bt${i}`)
-                buttons[i].addEventListener('click', clickNumber);
-            }
-
-
+            // document.querySelector(".acumulate").textContent=""
+            // document.querySelector(".result").textContent=""
         })();
     </script>
 

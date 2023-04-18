@@ -1,43 +1,117 @@
-function Calculadora(){
+class Calculadora {
+  constructor() {
+    this.numero = "";
+    this.operation = "";
+    this.action = "";
+    this.result = "";
+    this.acumulado = "";
+    this.acumuladoPantalla = document.querySelector(".acumulate");
+    this.resultPantalla = document.querySelector(".result");
+  }
 
+  addDigit(valor) {
+    this.numero += valor;
+    this.result = this.numero;
+    this.showResult();
+  }
 
-        let acum = 0
-        let number = ''
-        let operation = '+'
+  showAcumulado() {
+    this.acumuladoPantalla.textContent = this.acumulado;
+  }
 
-        let clickNumber = ev =>{
-            let number = ev.target.value
-            console.log(number)
-            if(localStorage.selected=='first'){
-                localStorage.first+=number
-                console.log(localStorage.first)
-            }else{
-                localStorage.second+=number
-                console.log(localStorage.second)
-            }
-            // console.log(ev, "mensaje", ev.target, ev.target.value)
+  showResult() {
+    this.resultPantalla.textContent = this.result;
+  }
+
+  suma() {
+    this.acumulado = +this.acumulado + +this.numero;
+    this.numero = "";
+    this.operation = "+";
+  }
+
+  resta() {
+    this.acumulado = +this.acumulado - +this.numero;
+    this.numero = "";
+    this.operation = "-";
+  }
+
+  divide() {
+    if (this.acumulado === "") this.acumulado = this.numero;
+    else this.acumulado = +this.acumulado / +this.numero;
+    this.numero = "";
+    this.operation = "/";
+  }
+
+  multiplica() {
+    if (this.acumulado === "") this.acumulado = this.numero;
+    else this.acumulado = +this.acumulado * +this.numero;
+    this.numero = "";
+    this.operation = "*";
+  }
+
+  selectOperation(action) {
+    // console.log(operation);
+    this.action = action;
+    switch (action) {
+      case "+":
+        this.suma();
+        break;
+      case "*":
+        this.multiplica();
+        break;
+      case "-":
+        this.resta();
+        break;
+      case "/":
+        this.divide();
+        break;
+      case "CE":
+        this.result = 0;
+        this.numero = "";
+        break;
+      case "C":
+        this.result = 0;
+        this.acumulado = 0;
+        this.numero = "";
+        break;
+      case "<=":
+        console.log("delete");
+        this.result = this.result.slice(0, -1);
+        this.numero = this.result;
+        break;
+      case "±":
+        this.result = +this.result * -1;
+        this.numero = this.result;
+        break;
+      case ",":
+        console.log("coma");
+        break;
+      case "=":
+        console.log("=======", this.operation);
+        switch (this.operation) {
+          case "+":
+            this.result = +this.acumulado + +this.result;
+            this.acumulado = this.result;
+            break;
+          case "-":
+            this.result = +this.acumulado - +this.result;
+            this.acumulado = this.result;
+            break;
+          case "*":
+            if (this.acumulado === "") this.acumulado = this.numero;
+            else this.acumulado = +this.acumulado * +this.numero;
+            this.result = +this.acumulado * +this.result;
+            this.acumulado = this.result;
+            break;
+          case "/":
+            if (this.acumulado === "") this.acumulado = this.numero;
+            else this.acumulado = +this.acumulado / +this.numero;
+            this.result = +this.acumulado / +this.result;
+            this.acumulado = this.result;
+            break;
         }
-        
-        let clickOperation = ev =>{
-            let operations = ev.target.value
-            console.log(operations)
-        }
-
-        let clickCalculate = ev =>{
-            console.log("calculate")
-        }
-
-        let btnSum = document.querySelector('#btnSum')
-        btnSum.addEventListener('click', clickOperation);
-        let btnCalculate = document.querySelector('#btnCalculate')
-        btnCalculate.addEventListener('click', clickCalculate);
-        let buttons = []
-
-        for(let i = 0; i <= 9; i++) {
-            buttons[i] = document.querySelector(`#bt${i}`)
-            buttons[i].addEventListener('click', clickNumber);
-        }
-
-
-
+    }
+    this.showAcumulado();
+    this.showResult();
+  }
 }
