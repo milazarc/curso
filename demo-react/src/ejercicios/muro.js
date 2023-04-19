@@ -75,7 +75,7 @@ class Item extends Component {
         <div className="card" style={{ width: "18rem" }}>
           <div className="card-body">
             <h5 className="card-title">{author}</h5>
-            {mostrar && <img src={download_url} className="d-flex justify-content-center" style={{ width: "12rem", height: "8rem"}}  />}
+            {mostrar && <img src={download_url} className="d-flex justify-content-center" style={{ width: "12rem", height: "8rem"}} alt='text' />}
             {!mostrar && <div className="fs-1 d-flex justify-content-center align-items-center bg-secondary text-white" style={{ width: "12rem", height: "8rem"}} >{id}</div>}
             <br />
             <div className="btn btn-success" onClick={this.toggleFoto.bind(this)}>Show</div>
