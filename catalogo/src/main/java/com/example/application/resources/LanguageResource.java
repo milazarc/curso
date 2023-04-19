@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.dtos.ElementoDTO;
+import com.example.domains.entities.dtos.FilmDto;
 import com.example.domains.entities.dtos.LanguageDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
@@ -65,26 +66,20 @@ public class LanguageResource {
 	
 	@GetMapping(path = "/{id}/pelis")
 	@Transactional
-	public List<ElementoDTO<Integer, String>> getPelis(@PathVariable int id) throws NotFoundException {
+	public List<FilmDto> getPelis(@PathVariable int id) throws NotFoundException {
 		var item = srvLanguageService.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return item.get().getFilms().stream().map(o -> new ElementoDTO<>(
-				o.getFilmId(), 
-				o.getTitle()))
-				.toList();
+		return item.get().getFilms().stream().map(o -> FilmDto.from(o)).toList();
 	}
 	
 	@GetMapping(path = "/{id}/pelisVO")
 	@Transactional
-	public List<ElementoDTO<Integer, String>> getPelisVO(@PathVariable int id) throws NotFoundException {
+	public List<FilmDto> getPelisVO(@PathVariable int id) throws NotFoundException {
 		var item = srvLanguageService.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return item.get().getFilmsVO().stream().map(o -> new ElementoDTO<>(
-				o.getFilmId(), 
-				o.getTitle()))
-				.toList();
+		return item.get().getFilmsVO().stream().map(o -> FilmDto.from(o)).toList();
 	}
 	
 	//POST

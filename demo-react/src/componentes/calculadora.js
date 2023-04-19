@@ -29,8 +29,6 @@ export default class Calculadora extends Component {
     console.log("clicado", value)
     const { result, number, acumulate, clear } = this.state;
     let aux = 0;
-    if(clear) this.addDigit(this.result)
-
       switch (value) {
         case "+":
           aux =  +acumulate + +number;
