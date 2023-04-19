@@ -23,7 +23,7 @@ export default class Muro extends Component {
           {listado &&
             listado.map((item, index) => {
               // console.log(item);
-              return <Item />;
+              return <Item key={index} {...item}/>;
             })}
         </div>
       </>
@@ -48,37 +48,37 @@ export default class Muro extends Component {
   }
   componentDidMount() {
     this.load(1);
+    console.log("componentDidMount")
   }
 }
 
 class Item extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      mostrar: false,
-      nombre: props.nombre ?? "Missing",
+      mostrar: props.mostrar??false,
+      author : props.author,
+      download_url :props.download_url,
+      id : props.id
+      
     };
   }
 
   toggleFoto() {
     this.setState({ mostrar: !this.state.mostrar });
-    console.log(this.state.mostrar, 1);
   }
 
   render() {
+    const {mostrar, author, download_url, id} = this.state
     return (
       <>
         <div className="card" style={{ width: "18rem" }}>
-          {/* <img src="..." class="card-img-top" alt="..."> */}
           <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a className="btn btn-success" onClick={this.toggleFoto.bind(this)}>
-              Show
-            </a>
+            <h5 className="card-title">{author}</h5>
+            {mostrar && <img src={download_url} className="d-flex justify-content-center" style={{ width: "12rem", height: "8rem"}}  />}
+            {!mostrar && <div className="fs-1 d-flex justify-content-center align-items-center bg-secondary text-white" style={{ width: "12rem", height: "8rem"}} >{id}</div>}
+            <br />
+            <div className="btn btn-success" onClick={this.toggleFoto.bind(this)}>Show</div>
           </div>
         </div>
       </>
