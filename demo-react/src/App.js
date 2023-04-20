@@ -44,11 +44,11 @@ export default class App extends Component {
 function Cabecera(props) {
   return (
     <header>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary border">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          {/* <a className="navbar-brand" href="#">
             <img src={myLogo} height={50} alt='Logotipo corporativo' />
-          </a>
+          </a> */}
           <button
             className="navbar-toggler"
             type="button"
