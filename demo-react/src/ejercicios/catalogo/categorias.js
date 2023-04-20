@@ -32,7 +32,7 @@ export class CategoriesMnt extends Component {
         let pagina = this.state.pagina;
         if (num || num === 0) pagina = num;
         this.setState({ loading: true });
-        fetch(`${this.url}?sort=firstName&page=${pagina}&size=10`)
+        fetch(`${this.url}?page=${pagina}&size=10`)
             .then((response) => {
                 response.json().then(
                     response.ok
@@ -54,7 +54,7 @@ export class CategoriesMnt extends Component {
     add() {
         this.setState({
             modo: "add",
-            elemento: { id: 0, nombre: "", apellidos: "" },
+            elemento: { id: 0, nombre: ""},
         });
     }
     edit(key) {
@@ -276,8 +276,6 @@ function CategoriesView({ elemento, onCancel }) {
                 <b>Código:</b> {elemento.id}
                 <br />
                 <b>Nombre:</b> {elemento.nombre}
-                <br />
-                <b>Apellidos:</b> {elemento.apellidos}
             </p>
             <p>
                 <button
@@ -313,27 +311,14 @@ class CategoriesForm extends Component {
         });
         this.validar();
     }
-    validarCntr(cntr) {
-        if (cntr.name) {
-            // eslint-disable-next-line default-case
-            switch (cntr.name) {
-                case "apellidos":
-                    cntr.setCustomValidity(
-                        cntr.value !== cntr.value.toUpperCase()
-                            ? "Debe estar en mayúsculas"
-                            : ""
-                    );
-                    break;
-            }
-        }
-    }
+
     validar() {
         if (this.form) {
             const errors = {};
             let invalid = false;
             for (var cntr of this.form.elements) {
                 if (cntr.name) {
-                    this.validarCntr(cntr);
+
                     errors[cntr.name] = cntr.validationMessage;
                     invalid = invalid || !cntr.validity.valid;
                 }
@@ -379,20 +364,6 @@ class CategoriesForm extends Component {
                         maxLength="45"
                     />
                     <ValidationMessage msg={this.state.msgErr.nombre} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="apellidos">Apellidos</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="apellidos"
-                        name="apellidos"
-                        value={this.state.elemento.apellidos}
-                        onChange={this.handleChange}
-                        minLength="2"
-                        maxLength="10"
-                    />
-                    <ValidationMessage msg={this.state.msgErr.apellidos} />
                 </div>
                 <div className="form-group">
                     <button
