@@ -19,11 +19,9 @@ export default class LanguageScreen extends Component {
     fetch("http://localhost:8010/api/idiomas/v1")
       .then((resp) => {
         if (resp.ok) {
-          resp.json().then((data) =>{
-						this.setState({ listado: data })
-						console.log(data)
-					} );
-
+          resp.json().then((data) => {
+            this.setState({ listado: data });
+          });
         } else {
           this.setError(resp.status);
         }
@@ -34,47 +32,44 @@ export default class LanguageScreen extends Component {
   componentDidMount() {
     this.load(1);
     console.log("componentDidMount");
-
   }
 
   render() {
     return (
       <>
-				{this.state.error && <ErrorMessage msg={this.state.error} />}
+        {this.state.error && <ErrorMessage msg={this.state.error} />}
         <h1>Idiomas</h1>
-				{this.state.listado && this.state.listado.map((item, index) => {
-					console.log(item)
-					return <Line {...item} key={item}/>
-				})
-
-				}
-        <div>
-
-				</div>
+        {this.state.listado &&
+          this.state.listado.map((item, index) => {
+            return <Line {...item} key={item.id} />;
+          })}
+        <div></div>
       </>
     );
   }
 }
-class Line extends Component {ç
+class Line extends Component {
+  ç;
 
-	constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       id: props.id,
-			nombre: props.nombre??'Ninguno'
+      nombre: props.nombre ?? "Ninguno",
     };
   }
 
-	render() {
-		const {id, nombre} = this.state
-		return (
-			<>
-						<div className='border'>{nombre}</div>
-						<button className='btn btn-success'>Modify</button>
-						<button className='btn btn-danger'>X</button>
-			</>
-
-		)
-	}
+  render() {
+    const { id, nombre } = this.state;
+    return (
+      <>
+        <div className="row">
+          <div className="border col">{id}</div>
+          <div className="border col">{nombre}</div>
+          <button className="btn col btn-success">Modify</button>
+          <button className="btn col btn-danger">X</button>
+        </div>
+      </>
+    );
+  }
 }
-

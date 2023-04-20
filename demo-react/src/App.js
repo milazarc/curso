@@ -9,6 +9,7 @@ import { ErrorBoundary } from './comunes';
 import Calculadora from './componentes/calculadora';
 import Muro from './ejercicios/muro';
 import LanguageScreen from './ejercicios/catalogo/languageScreen';
+import { ActoresMnt } from './ejercicios/catalogo/actores';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class App extends Component {
       main: 0
     }
     this.menu = [
+      { texto: 'actores', url: '/actores', componente: <ActoresMnt /> },
       { texto: 'idiomas', url: '/idiomas', componente: <LanguageScreen /> },
       { texto: 'muro', url: '/muro', componente: <Muro /> },
       { texto: 'inicio', url: '/', componente: <Home /> },
@@ -25,6 +27,8 @@ export default class App extends Component {
       { texto: 'contador', url: '/contador', componente: <Contador init={69} /> },
       { texto: 'calculadora', url: '/calculadora', componente: <Calculadora /> },
       { texto: 'ejemplos', url: '/ejemplos', componente: <Ejemplos /> },
+
+
 
 
     ]
