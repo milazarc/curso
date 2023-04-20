@@ -6,7 +6,7 @@ import {
     PaginacionCmd as Paginacion,
 } from "../../biblioteca/comunes";
 import { titleCase } from "../../biblioteca/formateadores";
-export class LanguageMnt extends Component {
+export class CategoriesMnt extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,7 @@ export class LanguageMnt extends Component {
         this.idOriginal = null;
         this.url =
             (process.env.REACT_APP_API_URL || "http://localhost:8010/") +
-            "/api/idiomas/v1";
+            "/api/categorias/v1";
     }
 
     setError(msg) {
@@ -174,7 +174,7 @@ export class LanguageMnt extends Component {
             case "add":
             case "edit":
                 result.push(
-                    <LanguageForm
+                    <CategoriesForm
                         key="main"
                         isAdd={this.state.modo === "add"}
                         elemento={this.state.elemento}
@@ -185,7 +185,7 @@ export class LanguageMnt extends Component {
                 break;
             case "view":
                 result.push(
-                    <ActoresView
+                    <CategoriesView
                         key="main"
                         elemento={this.state.elemento}
                         onCancel={(e) => this.cancel()}
@@ -195,7 +195,7 @@ export class LanguageMnt extends Component {
             default:
                 if (this.state.listado)
                     result.push(
-                        <ActoresList
+                        <CategoriesList
                             key="main"
                             listado={this.state.listado}
                             pagina={this.state.pagina}
@@ -213,13 +213,13 @@ export class LanguageMnt extends Component {
     }
 }
 
-function ActoresList(props) {
+function CategoriesList(props) {
     return (
         <>
             <table className="table table-hover table-striped">
                 <thead className="table-info">
                     <tr>
-                        <th>Lista de Actores y Actrices</th>
+                        <th>Lista de Categorias</th>
                         <th className="text-end">
                             <input
                                 type="button"
@@ -232,7 +232,7 @@ function ActoresList(props) {
                 </thead>
                 <tbody className="table-group-divider">
                     {props.listado.map((item) => (
-                        <tr key={item.actorId}>
+                        <tr key={item.id}>
                             <td>{titleCase(item.nombre)}</td>
                             <td className="text-end">
                                 <div className="btn-group text-end" role="group">
@@ -240,19 +240,19 @@ function ActoresList(props) {
                                         type="button"
                                         className="btn btn-primary"
                                         value="Ver"
-                                        onClick={(e) => props.onView(item.actorId)}
+                                        onClick={(e) => props.onView(item.id)}
                                     />
                                     <input
                                         type="button"
                                         className="btn btn-primary"
                                         value="Editar"
-                                        onClick={(e) => props.onEdit(item.actorId)}
+                                        onClick={(e) => props.onEdit(item.id)}
                                     />
                                     <input
                                         type="button"
                                         className="btn btn-danger"
                                         value="Borrar"
-                                        onClick={(e) => props.onDelete(item.actorId)}
+                                        onClick={(e) => props.onDelete(item.id)}
                                     />
                                 </div>
                             </td>
@@ -269,7 +269,7 @@ function ActoresList(props) {
     );
 }
 
-function ActoresView({ elemento, onCancel }) {
+function CategoriesView({ elemento, onCancel }) {
     return (
         <div>
             <p>
@@ -292,7 +292,7 @@ function ActoresView({ elemento, onCancel }) {
     );
 }
 
-class ActoresForm extends Component {
+class CategoriesForm extends Component {
     constructor(props) {
         super(props);
         this.state = { elemento: props.elemento, msgErr: [], invalid: false };
