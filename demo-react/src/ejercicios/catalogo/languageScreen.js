@@ -16,10 +16,14 @@ export default class LanguageScreen extends Component {
   }
   load(num) {
     this.setState({ loading: true });
-    fetch("https://picsum.photos/v2/list")
+    fetch("http://localhost:8010/api/idiomas/v1")
       .then((resp) => {
         if (resp.ok) {
-          resp.json().then((data) => this.setState({ listado: data }));
+          resp.json().then((data) =>{
+						this.setState({ listado: data })
+						console.log(data)
+					} );
+
         } else {
           this.setError(resp.status);
         }
@@ -34,13 +38,13 @@ export default class LanguageScreen extends Component {
   }
 
   render() {
-		let arr = [1,2,3,4]
     return (
       <>
 				{this.state.error && <ErrorMessage msg={this.state.error} />}
         <h1>Idiomas</h1>
-				{arr.map((item, index) => {
-					return <Line id={item} key={item}/>
+				{this.state.listado && this.state.listado.map((item, index) => {
+					console.log(item)
+					return <Line {...item} key={item}/>
 				})
 
 				}
