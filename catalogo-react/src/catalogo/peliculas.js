@@ -6,7 +6,8 @@ import {
     PaginacionCmd as Paginacion,
 } from "../biblioteca/comunes";
 import { titleCase } from "../biblioteca/formateadores";
-export class ActoresMnt extends Component {
+import FilmsForm from "./peliculasForm";
+export class FilmsMnt extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +22,7 @@ export class ActoresMnt extends Component {
         this.idOriginal = null;
         this.url =
             (process.env.REACT_APP_API_URL || "http://localhost:8010/") +
-            "/api/actores/v1";
+            "/api/peliculas/v1";
     }
 
     setError(msg) {
@@ -32,7 +33,7 @@ export class ActoresMnt extends Component {
         let pagina = this.state.pagina;
         if (num || num === 0) pagina = num;
         this.setState({ loading: true });
-        fetch(`${this.url}?sort=firstName&page=${pagina}&size=10`)
+        fetch(`${this.url}?page=${pagina}&size=10`)
             .then((response) => {
                 response.json().then(
                     response.ok
@@ -54,7 +55,7 @@ export class ActoresMnt extends Component {
     add() {
         this.setState({
             modo: "add",
-            elemento: { id: 0, nombre: "", apellidos: "" },
+            elemento: { id: 0, nombre: ""},
         });
     }
     edit(key) {
@@ -132,8 +133,7 @@ export class ActoresMnt extends Component {
                         if (response.ok) this.cancel();
                         else
                             response.json().then((error) =>
-                                this.setError(`${error.status}:
-    ${error.detail}`)
+                                this.setError(`${error.status}:${error.detail}`)
                             );
                         this.setState({ loading: false });
                     })
@@ -151,8 +151,7 @@ export class ActoresMnt extends Component {
                         if (response.ok) this.cancel();
                         else
                             response.json().then((error) =>
-                                this.setError(`${error.status}:
-    ${error.detail}`)
+                                this.setError(`${error.status}:${error.detail}`)
                             );
                         this.setState({ loading: false });
                     })
@@ -174,9 +173,10 @@ export class ActoresMnt extends Component {
             case "add":
             case "edit":
                 result.push(
-                    <ActoresForm
+                    <FilmsForm
                         key="main"
-                        isAdd={this.state.modo === "add"}
+                        // isAdd={this.state.modo === "add"}
+                        formType={'edit'}
                         elemento={this.state.elemento}
                         onCancel={(e) => this.cancel()}
                         onSend={(e) => this.send(e)}
@@ -185,17 +185,19 @@ export class ActoresMnt extends Component {
                 break;
             case "view":
                 result.push(
-                    <ActoresView
-                        key="main"
-                        elemento={this.state.elemento}
-                        onCancel={(e) => this.cancel()}
-                    />
+                    <FilmsForm
+                    key="main"
+                    isView={this.state.modo !== "view"}
+                    formType={'view'}
+                    elemento={this.state.elemento}
+                    onCancel={(e) => this.cancel()}
+                />
                 );
                 break;
             default:
                 if (this.state.listado)
                     result.push(
-                        <ActoresList
+                        <FilmsList
                             key="main"
                             listado={this.state.listado}
                             pagina={this.state.pagina}
@@ -213,13 +215,13 @@ export class ActoresMnt extends Component {
     }
 }
 
-function ActoresList(props) {
+function FilmsList(props) {
     return (
         <>
             <table className="table table-hover table-striped">
                 <thead className="table-info">
                     <tr>
-                        <th>Lista de Actores y Actrices</th>
+                        <th>Lista de Peliculas</th>
                         <th className="text-end">
                             <input
                                 type="button"
@@ -232,27 +234,27 @@ function ActoresList(props) {
                 </thead>
                 <tbody className="table-group-divider">
                     {props.listado.map((item) => (
-                        <tr key={item.actorId}>
-                            <td>{titleCase(item.nombre)}</td>
+                        <tr key={item.id}>
+                            <td>{titleCase(item.title)}</td>
                             <td className="text-end">
                                 <div className="btn-group text-end" role="group">
                                     <input
                                         type="button"
                                         className="btn btn-primary"
                                         value="Ver"
-                                        onClick={(e) => props.onView(item.actorId)}
+                                        onClick={(e) => props.onView(item.id)}
                                     />
                                     <input
                                         type="button"
                                         className="btn btn-primary"
                                         value="Editar"
-                                        onClick={(e) => props.onEdit(item.actorId)}
+                                        onClick={(e) => props.onEdit(item.id)}
                                     />
                                     <input
                                         type="button"
                                         className="btn btn-danger"
                                         value="Borrar"
-                                        onClick={(e) => props.onDelete(item.actorId)}
+                                        onClick={(e) => props.onDelete(item.id)}
                                     />
                                 </div>
                             </td>
@@ -269,149 +271,3 @@ function ActoresList(props) {
     );
 }
 
-function ActoresView({ elemento, onCancel }) {
-    return (
-        <div>
-            <p>
-                <b>Código:</b> {elemento.id}
-                <br />
-                <b>Nombre:</b> {elemento.nombre}
-                <br />
-                <b>Apellidos:</b> {elemento.apellidos}
-            </p>
-            <p>
-                <button
-                    className="btn btn-primary"
-                    type="button"
-                    onClick={(e) => onCancel()}
-                >
-                    Volver
-                </button>
-            </p>
-        </div>
-    );
-}
-
-class ActoresForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { elemento: props.elemento, msgErr: [], invalid: false };
-        this.handleChange = this.handleChange.bind(this);
-        this.onSend = () => {
-            if (this.props.onSend) this.props.onSend(this.state.elemento);
-        };
-        this.onCancel = () => {
-            if (this.props.onCancel) this.props.onCancel();
-        };
-    }
-    handleChange(event) {
-        const cmp = event.target.name;
-        const valor = event.target.value;
-        this.setState((prev) => {
-            prev.elemento[cmp] = valor;
-            return { elemento: prev.elemento };
-        });
-        this.validar();
-    }
-    validarCntr(cntr) {
-        if (cntr.name) {
-            // eslint-disable-next-line default-case
-            switch (cntr.name) {
-                case "apellidos":
-                    cntr.setCustomValidity(
-                        cntr.value !== cntr.value.toUpperCase()
-                            ? "Debe estar en mayúsculas"
-                            : ""
-                    );
-                    break;
-            }
-        }
-    }
-    validar() {
-        if (this.form) {
-            const errors = {};
-            let invalid = false;
-            for (var cntr of this.form.elements) {
-                if (cntr.name) {
-                    this.validarCntr(cntr);
-                    errors[cntr.name] = cntr.validationMessage;
-                    invalid = invalid || !cntr.validity.valid;
-                }
-            }
-            this.setState({ msgErr: errors, invalid: invalid });
-        }
-    }
-    componentDidMount() {
-        this.validar();
-    }
-    render() {
-        return (
-            <form
-                ref={(tag) => {
-                    this.form = tag;
-                }}
-            >
-                <div className="form-group">
-                    <label htmlFor="id">Código</label>
-                    <input
-                        type="number"
-                        className={"form-control" + (this.props.isAdd ? "" : "-plaintext")}
-                        id="id"
-                        name="id"
-                        value={this.state.elemento.id}
-                        onChange={this.handleChange}
-                        required
-                        readOnly={!this.props.isAdd}
-                    />
-                    <ValidationMessage msg={this.state.msgErr.id} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="nombre">Nombre</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="nombre"
-                        name="nombre"
-                        value={this.state.elemento.nombre}
-                        onChange={this.handleChange}
-                        required
-                        minLength="2"
-                        maxLength="45"
-                    />
-                    <ValidationMessage msg={this.state.msgErr.nombre} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="apellidos">Apellidos</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="apellidos"
-                        name="apellidos"
-                        value={this.state.elemento.apellidos}
-                        onChange={this.handleChange}
-                        minLength="2"
-                        maxLength="10"
-                    />
-                    <ValidationMessage msg={this.state.msgErr.apellidos} />
-                </div>
-                <div className="form-group">
-                    <button
-                        className="btn btn-primary"
-                        type="button"
-                        disabled={this.state.invalid}
-                        onClick={this.onSend}
-                    >
-                        Enviar
-                    </button>
-                    <button
-                        className="btn btn-primary"
-                        type="button"
-                        onClick={this.onCancel}
-                    >
-                        Volver
-                    </button>
-                </div>
-            </form>
-        );
-    }
-}

@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.FilmService;
+import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.CategoryDTO;
 import com.example.domains.entities.dtos.ElementoDTO;
 import com.example.domains.entities.dtos.FilmDetailsDTO;
 import com.example.domains.entities.dtos.FilmDto;
@@ -64,36 +66,30 @@ public class FilmResource {
 		return FilmDto.from(item.get());
 	}
 	
-	@GetMapping(path = "/complete/{id}")
-	public FilmDetailsDTO getOneComplete(@PathVariable int id) throws NotFoundException {
+	@GetMapping(path = "/{id}/complete")
+	public FilmEditDTO getOneComplete(@PathVariable int id) throws NotFoundException {
 		var item = srvFilmService.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return FilmDetailsDTO.from(item.get());
+		return FilmEditDTO.from(item.get());
 	}
 	
 	@GetMapping(path = "/{id}/actores")
 	@Transactional
-	public List<ElementoDTO<Integer, String>> getActores(@PathVariable int id) throws NotFoundException {
+	public List<ActorDTO> getActores(@PathVariable int id) throws NotFoundException {
 		var item = srvFilmService.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return item.get().getActors().stream().map(o -> new ElementoDTO<>(
-				o.getActorId(), 
-				o.getFirstName() + ' ' + o.getLastName()))
-				.toList();
+		return item.get().getActors().stream().map(o -> ActorDTO.from(o)).toList();
 	}
 	
 	@GetMapping(path = "/{id}/categorias")
 	@Transactional
-	public List<ElementoDTO<Integer, String>> getCategorias(@PathVariable int id) throws NotFoundException {
+	public List<CategoryDTO> getCategorias(@PathVariable int id) throws NotFoundException {
 		var item = srvFilmService.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return item.get().getCategories().stream().map(o -> new ElementoDTO<>(
-				o.getCategoryId(), 
-				o.getName()))
-				.toList();
+		return item.get().getCategories().stream().map(o -> CategoryDTO.from(o)).toList();
 	}	
 	
 	//POST

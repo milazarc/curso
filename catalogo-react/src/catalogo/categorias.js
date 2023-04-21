@@ -4,8 +4,8 @@ import {
     ErrorMessage,
     Esperando,
     PaginacionCmd as Paginacion,
-} from "../../biblioteca/comunes";
-import { titleCase } from "../../biblioteca/formateadores";
+} from "../biblioteca/comunes";
+import { titleCase } from "../biblioteca/formateadores";
 export class CategoriesMnt extends Component {
     constructor(props) {
         super(props);
