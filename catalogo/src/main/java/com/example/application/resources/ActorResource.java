@@ -40,16 +40,16 @@ public class ActorResource {
 	private ActorService srv;
 
 	@GetMapping
-	public List<ActorShort> getAll(@RequestParam(required = false) String sort) {
+	public List<ActorDTO> getAll(@RequestParam(required = false) String sort) {
 		if(sort != null) {
-			return (List<ActorShort>)srv.getByProjection(Sort.by(sort), ActorShort.class);
+			return (List<ActorDTO>)srv.getByProjection(Sort.by(sort), ActorDTO.class);
 		}
-		return srv.getByProjection(ActorShort.class);
+		return srv.getByProjection(ActorDTO.class);
 	}
 	
 	@GetMapping(params = "page")
-	public Page<ActorShort> getAll(Pageable pageable) {
-		return srv.getByProjection(pageable, ActorShort.class);
+	public Page<ActorDTO> getAll(Pageable pageable) {
+		return srv.getByProjection(pageable, ActorDTO.class);
 	}
 
 	@GetMapping(path = "/{id}")

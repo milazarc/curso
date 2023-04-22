@@ -10,12 +10,12 @@ import { titleCase } from "../biblioteca/formateadores";
 export default class FilmsForm extends Component {
     constructor(props) {
         super(props);
-        this.state = { elemento: props.elemento, msgErr: [], invalid: false, actores : [], categorias : [], idiomas: []};
+        this.state = { elemento: props.elemento, msgErr: [], invalid: false, actores: [], categorias: [], idiomas: [] };
         this.handleChange = this.handleChange.bind(this);
-        this.urlActores = (process.env.REACT_APP_API_URL || "http://localhost:8010/") +"/api/actores/v1";
-        this.urlCategorias = (process.env.REACT_APP_API_URL || "http://localhost:8010/") +"/api/categorias/v1";
-        this.urlIdiomas = (process.env.REACT_APP_API_URL || "http://localhost:8010/") +"/api/idiomas/v1";
-        this.urlPeliculas = (process.env.REACT_APP_API_URL || "http://localhost:8010/") +"/api/peliculas/v1";
+        this.urlActores = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/actores/v1";
+        this.urlCategorias = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/categorias/v1";
+        this.urlIdiomas = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/idiomas/v1";
+        this.urlPeliculas = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/peliculas/v1";
         this.onSend = () => {
             if (this.props.onSend) this.props.onSend(this.state.elemento);
         };
@@ -58,10 +58,10 @@ export default class FilmsForm extends Component {
                     response.ok
                         ? (data) => {
                             this.setState({
-                                actores: data.content,
+                                actores: data,
                                 loading: false,
                             });
-                            console.log(data)
+                            // console.log(data)
                         }
                         : (error) => this.setError(`${error.status}: ${error.error}`)
                 );
@@ -79,10 +79,10 @@ export default class FilmsForm extends Component {
                     response.ok
                         ? (data) => {
                             this.setState({
-                                categorias: data.content,
+                                categorias: data,
                                 loading: false,
                             });
-                            console.log(data)
+                            // console.log(data)
                         }
                         : (error) => this.setError(`${error.status}: ${error.error}`)
                 );
@@ -100,10 +100,10 @@ export default class FilmsForm extends Component {
                     response.ok
                         ? (data) => {
                             this.setState({
-                                idiomas: data.content,
+                                idiomas: data,
                                 loading: false,
                             });
-                            console.log(data)
+                            // console.log(data)
                         }
                         : (error) => this.setError(`${error.status}: ${error.error}`)
                 );
@@ -112,9 +112,9 @@ export default class FilmsForm extends Component {
     }
 
     getElement() {
-
+        console.log("llamandoElement")
         let id = this.state.elemento.id;
-        console.log("llamandoElement", id)
+        console.log( id, this.state.elemento)
         this.setState({ loading: true });
         fetch(`${this.urlPeliculas}/${id}/complete`)
             .then((response) => {
@@ -122,10 +122,9 @@ export default class FilmsForm extends Component {
                     response.ok
                         ? (data) => {
                             this.setState({
-                                actores: data.content,
+                                elemento: data,
                                 loading: false,
                             });
-                            console.log(data)
                         }
                         : (error) => this.setError(`${error.status}: ${error.error}`)
                 );
@@ -135,7 +134,7 @@ export default class FilmsForm extends Component {
 
     componentDidMount() {
 
-        console.log("componentDidMount")
+        console.log("componentDidMount", this.state.elemento)
         this.getElement();
         this.getListActores();
         this.getListCategorias();
@@ -143,60 +142,96 @@ export default class FilmsForm extends Component {
         this.validar();
     }
     render() {
+        console.log(this.state.actores)
         return (
-            <form
-                ref={(tag) => {
-                    this.form = tag;
-                }}
-            >
-                <div className="form-group">
-                    <label htmlFor="id">Código</label>
-                    <input
-                        type="number"
-                        className={"form-control" + (this.props.isAdd ? "" : "-plaintext")}
-                        id="id"
-                        name="id"
-                        value={this.state.elemento.id}
-                        onChange={this.handleChange}
-                        required
-                        readOnly={!this.props.isAdd}
-                    />
-                    <ValidationMessage msg={this.state.msgErr.id} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="nombre">Titulo</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="nombre"
-                        name="nombre"
-                        value={this.state.elemento.nombre}
-                        onChange={this.handleChange}
-                        required
-                        minLength="2"
-                        maxLength="45"
-                    />
-                    <ValidationMessage msg={this.state.msgErr.nombre} />
-                </div>
+            <>
+                <form
+                    ref={(tag) => {
+                        this.form = tag;
+                    }}
+                >
+                    <div className="form-group">
+                        <label htmlFor="id">Código</label>
+                        <input
+                            type="number"
+                            className={"form-control" + (this.props.isAdd ? "" : "-plaintext")}
+                            id="id"
+                            name="id"
+                            value={this.state.elemento.id}
+                            onChange={this.handleChange}
+                            required
+                            readOnly={!this.props.isAdd}
+                        />
+                        <ValidationMessage msg={this.state.msgErr.id} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="nombre">Titulo</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="nombre"
+                            name="nombre"
+                            value={this.state.elemento.nombre}
+                            onChange={this.handleChange}
+                            required
+                            minLength="2"
+                            maxLength="45"
+                        />
+                        <ValidationMessage msg={this.state.msgErr.nombre} />
+                    </div>
 
+
+
+                    <div className="form-group">
+                        <button
+                            className="btn btn-primary"
+                            type="button"
+                            disabled={this.state.invalid}
+                            onClick={this.onSend}
+                        >
+                            Enviar
+                        </button>
+                        <button
+                            className="btn btn-primary"
+                            type="button"
+                            onClick={this.onCancel}
+                        >
+                            Volver
+                        </button>
+                    </div>
+                </form>
+                {this.state.elemento.actors && this.state.actores &&
+                    <ElementList name="Actores" listado={this.state.elemento.actors} base={this.state.actores}/>}
+            </>
+
+        );
+    }
+}
+
+function ElementList(props) {
+    console.log("renderizando", props.listado, "listdo", props.base, "bases")
+    return (
+        <>
+            <table className="table table-hover table-striped">
+                <thead className="table-info">
+                    <tr>
+                        <th>{props.name}</th>
+                        <th className="text-end">
+                            <input
+                                type="button"
+                                className="btn btn-primary"
+                                value="Añadir"
+                                onClick={(e) => props.onAdd()}
+                            />
+                        </th>
+                    </tr>
+                </thead>
                 <tbody className="table-group-divider">
-                    {this.state.elemento.actors.map((item) => (
+                    {props.listado.map((item) => (
                         <tr key={item.id}>
-                            <td>{titleCase(this.state.actores.find(element => element.id ))}</td>
+                            <td>{titleCase(props.base.find(element => element.id === item.id).nombre + ' ' + props.base.find(element => element.id).apellidos)}</td>
                             <td className="text-end">
                                 <div className="btn-group text-end" role="group">
-                                    <input
-                                        type="button"
-                                        className="btn btn-primary"
-                                        value="Ver"
-                                        onClick={(e) => props.onView(item.id)}
-                                    />
-                                    <input
-                                        type="button"
-                                        className="btn btn-primary"
-                                        value="Editar"
-                                        onClick={(e) => props.onEdit(item.id)}
-                                    />
                                     <input
                                         type="button"
                                         className="btn btn-danger"
@@ -208,25 +243,12 @@ export default class FilmsForm extends Component {
                         </tr>
                     ))}
                 </tbody>
-
-                <div className="form-group">
-                    <button
-                        className="btn btn-primary"
-                        type="button"
-                        disabled={this.state.invalid}
-                        onClick={this.onSend}
-                    >
-                        Enviar
-                    </button>
-                    <button
-                        className="btn btn-primary"
-                        type="button"
-                        onClick={this.onCancel}
-                    >
-                        Volver
-                    </button>
-                </div>
-            </form>
-        );
-    }
+            </table>
+            <Paginacion
+                actual={props.pagina}
+                total={props.paginas}
+                onChange={(num) => props.onChangePage(num)}
+            />
+        </>
+    );
 }

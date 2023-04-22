@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class FilmEditDTO {
-	private int filmId;
+	private int id;
 	private String description;
 	private int length;
 	@Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$")
@@ -64,7 +64,7 @@ public class FilmEditDTO {
 	}
 	public static Film from(FilmEditDTO source) {
 		Film rslt = new Film(
-				source.getFilmId(), 
+				source.getId(), 
 				source.getTitle(),
 				source.getDescription(),
 				source.getReleaseYear(),

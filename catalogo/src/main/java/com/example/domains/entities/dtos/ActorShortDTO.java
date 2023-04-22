@@ -6,7 +6,7 @@ import lombok.Value;
 
 @Value
 public class ActorShortDTO {
-	private int actorId;
+	private int id;
 	private String firstName;
 	private String lastName;
 	

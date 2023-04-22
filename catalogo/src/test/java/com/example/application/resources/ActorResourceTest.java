@@ -59,11 +59,11 @@ class ActorResourceTest {
 	void tearDown() throws Exception {
 	}
 	
-	@Value
-	static class ActorShortMock implements ActorShort {
-		int actorId;
-		String nombre;
-	}
+//	@Value
+//	static class ActorShortMock implements ActorShort {
+//		int actorId;
+//		String nombre;
+//	}
 	
 	@Nested
 	class Affirmative{

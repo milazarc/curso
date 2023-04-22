@@ -107,7 +107,7 @@ public class FilmResource {
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable int id, @Valid @RequestBody FilmEditDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		if(id != item.getFilmId())
+		if(id != item.getId())
 			throw new BadRequestException("No coinciden los identificadores");
 		srvFilmService.modify(FilmEditDTO.from(item));
 	}
