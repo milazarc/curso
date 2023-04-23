@@ -7,30 +7,17 @@ import {
 } from "../biblioteca/comunes";
 import { titleCase } from "../biblioteca/formateadores";
 
-export default class FilmsForm extends Component {
+export default class FilmsView extends Component {
     constructor(props) {
         super(props);
         this.state = { elemento: props.elemento, msgErr: [], invalid: false, actores: [], categorias: [], idiomas: [] };
-        this.handleChange = this.handleChange.bind(this);
         this.urlActores = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/actores/v1";
         this.urlCategorias = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/categorias/v1";
         this.urlIdiomas = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/idiomas/v1";
         this.urlPeliculas = (process.env.REACT_APP_API_URL || "http://localhost:8010/") + "/api/peliculas/v1";
-        this.onSend = () => {
-            if (this.props.onSend) this.props.onSend(this.state.elemento);
-        };
         this.onCancel = () => {
             if (this.props.onCancel) this.props.onCancel();
         };
-    }
-    handleChange(event) {
-        const cmp = event.target.name;
-        const valor = event.target.value;
-        this.setState((prev) => {
-            prev.elemento[cmp] = valor;
-            return { elemento: prev.elemento };
-        });
-        this.validar();
     }
 
     validar() {
@@ -151,151 +138,97 @@ export default class FilmsForm extends Component {
                     }}
                 >
                     <div className="form-group">
-                        <label htmlFor="id">Código</label>
+                        <label htmlFor="id"><b>Código</b></label>
                         <input
                             type="number"
-                            className={"form-control" + (this.props.isAdd ? "" : "-plaintext")}
-                            id="id"
-                            name="id"
+                            className="form-control-plaintext"
                             value={this.state.elemento.id}
-                            onChange={this.handleChange}
-                            required
-                            readOnly={!this.props.isAdd}
                         />
-                        <ValidationMessage msg={this.state.msgErr.id} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="nombre">Titulo</label>
+                        <label htmlFor="nombre"><b>Titulo</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="title"
-                            name="title"
+                            className="form-control-plaintext"
                             value={this.state.elemento.title}
-                            onChange={this.handleChange}
-                            required
-                            minLength="2"
-                            maxLength="45"
                         />
-                        <ValidationMessage msg={this.state.msgErr.nombre} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Descripcion</label>
+                        <label htmlFor="nombre"><b>Descripcion</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="descripcion"
-                            name="descripcion"
+                            className="form-control-plaintext"
                             value={this.state.elemento.description}
-                            onChange={this.handleChange}
                         />
-                        <ValidationMessage msg={this.state.msgErr.descripcion} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Rating</label>
+                        <label htmlFor="nombre"><b>Rating</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="rating"
-                            name="rating"
+                            className="form-control-plaintext"
                             value={this.state.elemento.rating}
-                            onChange={this.handleChange}
-
                         />
-                        <ValidationMessage msg={this.state.msgErr.rating} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Año emision</label>
+                        <label htmlFor="nombre"><b>Año emision</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="releaseYear"
-                            name="releaseYear"
+                            className="form-control-plaintext"
                             value={this.state.elemento.releaseYear}
-                            onChange={this.handleChange}
                         />
-                        <ValidationMessage msg={this.state.msgErr.releaseYear} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Duracion Rental</label>
+                        <label htmlFor="nombre"><b>Duracion Rental</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="rentalDuration"
-                            name="rentalDuration"
+                            className="form-control-plaintext"
                             value={this.state.elemento.rentalDuration}
-                            onChange={this.handleChange}
                         />
-                        <ValidationMessage msg={this.state.msgErr.rentalDuration} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Precio Rental</label>
+                        <label htmlFor="nombre"><b>Precio Rental</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="rentalRate"
-                            name="rentalRate"
+                            className="form-control-plaintext"
                             value={this.state.elemento.rentalRate}
-                            onChange={this.handleChange}
                         />
-                        <ValidationMessage msg={this.state.msgErr.rentalRate} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Coste Remplazo</label>
+                        <label htmlFor="nombre"><b>Coste Remplazo</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="replacementCost"
-                            name="replacementCost"
+                            className="form-control-plaintext"
                             value={this.state.elemento.replacementCost}
-                            onChange={this.handleChange}
                         />
-                        <ValidationMessage msg={this.state.msgErr.replacementCost} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Idioma</label>
+                        <label htmlFor="nombre"><b>Idioma</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="languageId"
-                            name="languageId"
+                            className="form-control-plaintext"
                             value={this.state.elemento.languageId}
-                            onChange={this.handleChange}
                         />
-                        <ValidationMessage msg={this.state.msgErr.languageId} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre">Idioma Original</label>
+                        <label htmlFor="nombre"><b>Idioma Original</b></label>
                         <input
                             type="text"
-                            className="form-control"
-                            id="languageVOId"
-                            name="languageVOId"
+                            className="form-control-plaintext"
                             value={this.state.elemento.languageVOId}
-                            onChange={this.handleChange}
                         />
-                        <ValidationMessage msg={this.state.msgErr.languageVOId} />
                     </div>
 
 
 
                     <div className="form-group">
-                        <button
-                            className="btn btn-primary"
-                            type="button"
-                            disabled={this.state.invalid}
-                            onClick={this.onSend}
-                        >
-                            Enviar
-                        </button>
                         <button
                             className="btn btn-primary"
                             type="button"
@@ -320,16 +253,6 @@ export default class FilmsForm extends Component {
                                     {this.state.elemento.actors.map((item) => (
                                         <tr key={item.id}>
                                             <td>{titleCase(this.state.actores.find(element => element.id === item).nombre + ' ' + this.state.actores.find(element => element.id === item).apellidos)}</td>
-                                            <td className="text-end">
-                                                <div className="btn-group text-end" role="group">
-                                                    <input
-                                                        type="button"
-                                                        className="btn btn-danger"
-                                                        value="Eliminar"
-                                                    // onClick={(e) => props.onDelete(item.id)}
-                                                    />
-                                                </div>
-                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -350,16 +273,6 @@ export default class FilmsForm extends Component {
                                     {this.state.elemento.categories.map((item) => (
                                         <tr key={item.id}>
                                             <td>{this.state.categorias.find(element => element.id === item).nombre}</td>
-                                            <td className="text-end">
-                                                <div className="btn-group text-end" role="group">
-                                                    <input
-                                                        type="button"
-                                                        className="btn btn-danger"
-                                                        value="Eliminar"
-                                                    // onClick={(e) => props.onDelete(item.id)}
-                                                    />
-                                                </div>
-                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>

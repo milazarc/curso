@@ -7,6 +7,7 @@ import {
 } from "../biblioteca/comunes";
 import { titleCase } from "../biblioteca/formateadores";
 import FilmsForm from "./peliculasForm";
+import FilmsView from "./peliculasView";
 export class FilmsMnt extends Component {
     constructor(props) {
         super(props);
@@ -185,9 +186,8 @@ export class FilmsMnt extends Component {
                 break;
             case "view":
                 result.push(
-                    <FilmsForm
+                    <FilmsView
                     key="main"
-                    isView={this.state.modo !== "view"}
                     formType={'view'}
                     elemento={this.state.elemento}
                     onCancel={(e) => this.cancel()}

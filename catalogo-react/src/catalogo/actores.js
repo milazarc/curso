@@ -232,27 +232,27 @@ function ActoresList(props) {
                 </thead>
                 <tbody className="table-group-divider">
                     {props.listado.map((item) => (
-                        <tr key={item.actorId}>
-                            <td>{titleCase(item.nombre)}</td>
+                        <tr key={item.id}>
+                            <td>{titleCase(item.nombre + ' ' + item.apellidos)}</td>
                             <td className="text-end">
                                 <div className="btn-group text-end" role="group">
                                     <input
                                         type="button"
                                         className="btn btn-primary"
                                         value="Ver"
-                                        onClick={(e) => props.onView(item.actorId)}
+                                        onClick={(e) => props.onView(item.id)}
                                     />
                                     <input
                                         type="button"
                                         className="btn btn-primary"
                                         value="Editar"
-                                        onClick={(e) => props.onEdit(item.actorId)}
+                                        onClick={(e) => props.onEdit(item.id)}
                                     />
                                     <input
                                         type="button"
                                         className="btn btn-danger"
                                         value="Borrar"
-                                        onClick={(e) => props.onDelete(item.actorId)}
+                                        onClick={(e) => props.onDelete(item.id)}
                                     />
                                 </div>
                             </td>
