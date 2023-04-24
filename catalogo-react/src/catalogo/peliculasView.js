@@ -227,6 +227,51 @@ export default class FilmsView extends Component {
                     </div>
 
 
+                    <div className="form-group">
+                        <div className="row">
+
+                            {this.state.elemento.actors && this.state.actores &&
+                                <div className="col-2 w-50">
+
+                                    <table className="table table-hover table-striped">
+                                        <thead className="table-info">
+                                            <tr>
+                                                <th>Actores</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="table-group-divider">
+                                            {this.state.elemento.actors.map((item) => (
+                                                <tr key={item.id}>
+                                                    <td>{titleCase(this.state.actores.find(element => element.id === item).nombre + ' ' + this.state.actores.find(element => element.id === item).apellidos)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+
+                            {this.state.elemento.actors && this.state.actores &&
+                                <div className="col-2 w-50">
+
+                                    <table className="table table-hover table-striped">
+                                        <thead className="table-info">
+                                            <tr>
+                                                <th>Categorias</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="table-group-divider">
+                                            {this.state.elemento.categories.map((item) => (
+                                                <tr key={item.id}>
+                                                    <td>{this.state.categorias.find(element => element.id === item).nombre}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
 
                     <div className="form-group">
                         <button
@@ -238,48 +283,7 @@ export default class FilmsView extends Component {
                         </button>
                     </div>
                 </form>
-                <div className="row">
 
-                    {this.state.elemento.actors && this.state.actores &&
-                        <div className="col-2 w-50">
-
-                            <table className="table table-hover table-striped">
-                                <thead className="table-info">
-                                    <tr>
-                                        <th>Actores</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="table-group-divider">
-                                    {this.state.elemento.actors.map((item) => (
-                                        <tr key={item.id}>
-                                            <td>{titleCase(this.state.actores.find(element => element.id === item).nombre + ' ' + this.state.actores.find(element => element.id === item).apellidos)}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    }
-
-                    {this.state.elemento.actors && this.state.actores &&
-                        <div className="col-2 w-50">
-
-                            <table className="table table-hover table-striped">
-                                <thead className="table-info">
-                                    <tr>
-                                        <th>Categorias</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="table-group-divider">
-                                    {this.state.elemento.categories.map((item) => (
-                                        <tr key={item.id}>
-                                            <td>{this.state.categorias.find(element => element.id === item).nombre}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    }
-                </div>
             </>
 
         );

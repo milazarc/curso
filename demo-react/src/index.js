@@ -3,10 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
-//theme
-import "primereact/resources/themes/lara-light-indigo/theme.css";     
-//core
-import "primereact/resources/primereact.min.css";                                       
+import '@fortawesome/fontawesome-free/css/all.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

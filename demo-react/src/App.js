@@ -4,13 +4,12 @@ import './App.css';
 
 
 import React, { Component } from 'react'
-import { Card, Contador } from './componentes';
-import { ErrorBoundary } from './comunes';
-import Calculadora from './componentes/calculadora';
+import { Card, Contador, Coordenadas } from './componentes';
+import { ErrorBoundary } from './biblioteca/comunes';
+import Calculadora from './ejercicios/calculadora';
 import Muro from './ejercicios/muro';
-import { ActoresMnt } from './ejercicios/catalogo/actores';
-import { LanguagesMnt } from './ejercicios/catalogo/languages';
-import { CategoriesMnt } from './ejercicios/catalogo/categorias';
+import { PadreFormulario } from './formulario';
+import { ActoresMnt } from './ejercicios/actores';
 
 export default class App extends Component {
   constructor(props) {
@@ -21,14 +20,13 @@ export default class App extends Component {
     }
     this.menu = [
       { texto: 'actores', url: '/actores', componente: <ActoresMnt /> },
-      { texto: 'idiomas', url: '/idiomas', componente: <LanguagesMnt /> },
-      { texto: 'categorias', url: '/categorias', componente: <CategoriesMnt /> },
-      { texto: 'muro', url: '/muro', componente: <Muro /> },
       { texto: 'inicio', url: '/', componente: <Home /> },
       { texto: 'demos', url: '/demos', componente: <DemosJSX /> },
       { texto: 'contador', url: '/contador', componente: <Contador init={69} /> },
       { texto: 'calculadora', url: '/calculadora', componente: <Calculadora /> },
+      { texto: 'muro', url: '/muro', componente: <Muro /> },
       { texto: 'ejemplos', url: '/ejemplos', componente: <Ejemplos /> },
+      // { texto: 'fromulario', url: '/fromulario', componente: <PadreFormulario /> },
     ]
   }
 
@@ -37,9 +35,10 @@ export default class App extends Component {
       <>
         <Cabecera menu={this.menu} actual={this.state.main} onSelectMenu={indice => this.setState({ main: indice })} />
         <main className='container-fluid'>
-          <ErrorBoundary>
+           {this.menu[this.state.main].componente}
+          {/* <ErrorBoundary>
             {this.menu[this.state.main].componente}
-          </ErrorBoundary>
+          </ErrorBoundary> */}
         </main>
         <Pie />
       </>
@@ -50,11 +49,11 @@ export default class App extends Component {
 function Cabecera(props) {
   return (
     <header>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary border">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          {/* <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="#">
             <img src={myLogo} height={50} alt='Logotipo corporativo' />
-          </a> */}
+          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -154,6 +153,7 @@ class DemosJSX extends Component {
     ]
     return (
       <>
+        <Coordenadas />
         {saluda}
         {limpia ? <b>verdadero</b> : <i>falso {nombre}</i>}
         {limpia && <h2>Limpia</h2>}
