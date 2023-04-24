@@ -37,7 +37,6 @@ export default class FilmsView extends Component {
 
     getListActores() {
         let id = this.state.elemento.id;
-        console.log("llamandoActores", id)
         this.setState({ loading: true });
         fetch(`${this.urlActores}`)
             .then((response) => {
@@ -48,7 +47,6 @@ export default class FilmsView extends Component {
                                 actores: data,
                                 loading: false,
                             });
-                            // console.log(data)
                         }
                         : (error) => this.setError(`${error.status}: ${error.error}`)
                 );
@@ -57,8 +55,6 @@ export default class FilmsView extends Component {
     }
 
     getListCategorias() {
-        let id = this.state.elemento.id;
-        console.log("llamandoCategorias", id)
         this.setState({ loading: true });
         fetch(`${this.urlCategorias}`)
             .then((response) => {
@@ -69,7 +65,6 @@ export default class FilmsView extends Component {
                                 categorias: data,
                                 loading: false,
                             });
-                            console.log("categorie", data)
                         }
                         : (error) => this.setError(`${error.status}: ${error.error}`)
                 );
@@ -78,10 +73,8 @@ export default class FilmsView extends Component {
     }
 
     getListIdiomas() {
-        let id = this.state.elemento.id;
-        console.log("llamandoIdiomas", id)
         this.setState({ loading: true });
-        fetch(`${this.urlCategorias}`)
+        fetch(`${this.urlIdiomas}`)
             .then((response) => {
                 response.json().then(
                     response.ok
@@ -90,7 +83,6 @@ export default class FilmsView extends Component {
                                 idiomas: data,
                                 loading: false,
                             });
-                            // console.log(data)
                         }
                         : (error) => this.setError(`${error.status}: ${error.error}`)
                 );
@@ -99,9 +91,8 @@ export default class FilmsView extends Component {
     }
 
     getElement() {
-        console.log("llamandoElement")
         let id = this.state.elemento.id;
-        console.log(id, this.state.elemento)
+        console.log("getElement",this.state.elemento)
         this.setState({ loading: true });
         fetch(`${this.urlPeliculas}/${id}/complete`)
             .then((response) => {
@@ -129,7 +120,8 @@ export default class FilmsView extends Component {
         this.validar();
     }
     render() {
-        console.log(this.state.categorias)
+
+
         return (
             <>
                 <form
@@ -143,6 +135,7 @@ export default class FilmsView extends Component {
                             type="number"
                             className="form-control-plaintext"
                             value={this.state.elemento.id}
+                            readOnly={true}
                         />
                     </div>
                     <div className="form-group">
@@ -151,6 +144,7 @@ export default class FilmsView extends Component {
                             type="text"
                             className="form-control-plaintext"
                             value={this.state.elemento.title}
+                            readOnly={true}
                         />
                     </div>
 
@@ -160,16 +154,22 @@ export default class FilmsView extends Component {
                             type="text"
                             className="form-control-plaintext"
                             value={this.state.elemento.description}
+                            readOnly={true}
                         />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="nombre"><b>Rating</b></label>
-                        <input
-                            type="text"
-                            className="form-control-plaintext"
-                            value={this.state.elemento.rating}
-                        />
+                            <input
+                                type="text"
+                                className="form-control-plaintext"
+                                value={[{id: "G", nombre: "General audiences"},
+                                {id: "PG", nombre: "Parental guidance suggested"},
+                                {id: "PG-13", nombre: "Parents strongly cautioned"},
+                                {id: "R", nombre: "Restricted"},
+                                {id: "NC-17", nombre: "Adults only"}].find(element => element.id === this.state.elemento.rating)?.nombre}
+                                readOnly={true}
+                            />
                     </div>
 
                     <div className="form-group">
@@ -178,6 +178,17 @@ export default class FilmsView extends Component {
                             type="text"
                             className="form-control-plaintext"
                             value={this.state.elemento.releaseYear}
+                            readOnly={true}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="nombre"><b>Duracion</b></label>
+                        <input
+                            type="text"
+                            className="form-control-plaintext"
+                            value={this.state.elemento.length}
+                            readOnly={true}
                         />
                     </div>
 
@@ -187,6 +198,7 @@ export default class FilmsView extends Component {
                             type="text"
                             className="form-control-plaintext"
                             value={this.state.elemento.rentalDuration}
+                            readOnly={true}
                         />
                     </div>
 
@@ -196,6 +208,7 @@ export default class FilmsView extends Component {
                             type="text"
                             className="form-control-plaintext"
                             value={this.state.elemento.rentalRate}
+                            readOnly={true}
                         />
                     </div>
 
@@ -205,25 +218,30 @@ export default class FilmsView extends Component {
                             type="text"
                             className="form-control-plaintext"
                             value={this.state.elemento.replacementCost}
+                            readOnly={true}
                         />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="nombre"><b>Idioma</b></label>
-                        <input
-                            type="text"
-                            className="form-control-plaintext"
-                            value={this.state.elemento.languageId}
-                        />
+                        <th className="input-group">
+                            <input
+                                type="text"
+                                className="form-control-plaintext"
+                                value={titleCase(this.state.idiomas.find(element => element.id === this.state.elemento.languageId)?.nombre)}
+                                readOnly={true}
+                            />
+                        </th>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="nombre"><b>Idioma Original</b></label>
-                        <input
-                            type="text"
-                            className="form-control-plaintext"
-                            value={this.state.elemento.languageVOId}
-                        />
+                            <input
+                                type="text"
+                                className="form-control-plaintext"
+                                value={titleCase(this.state.idiomas.find(element => element.id === this.state.elemento.languageVOId)?.nombre)}
+                                readOnly={true}
+                            />
                     </div>
 
 

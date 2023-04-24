@@ -56,7 +56,21 @@ export class FilmsMnt extends Component {
     add() {
         this.setState({
             modo: "add",
-            elemento: { id: 0, nombre: ""},
+            elemento: {
+                "id": 0,
+                "description": "",
+                "length": 0,
+                "rating": "PG",
+                "releaseYear": "2000",
+                "rentalDuration": 1,
+                "rentalRate": 0.01,
+                "replacementCost": 0.01,
+                "title": "",
+                "languageId": 1,
+                "languageVOId": null,
+                "actors": [],
+                "categories": []
+            }
         });
     }
     edit(key) {
@@ -162,6 +176,7 @@ export class FilmsMnt extends Component {
     }
 
     render() {
+        console.log("estado", this.state.modo)
         if (this.state.loading) return <Esperando />;
         let result = [
             <ErrorMessage
@@ -176,7 +191,7 @@ export class FilmsMnt extends Component {
                 result.push(
                     <FilmsForm
                         key="main"
-                        // isAdd={this.state.modo === "add"}
+                        isAdd={this.state.modo === "add"}
                         formType={'edit'}
                         elemento={this.state.elemento}
                         onCancel={(e) => this.cancel()}
